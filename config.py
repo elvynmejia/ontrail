@@ -5,10 +5,12 @@ load_dotenv()
 
 class Config:
     """Base config."""
-    SECRET_KEY = environ.get('SECRET_KEY')
-    FLASK_APP = environ.get('FLASK_APP')
-    FLASK_ENV = environ.get('FLASK_ENV')
-    DEBUG = environ.get('DEBUG')
-    TESTING = environ.get('TESTING')
-    DATABASE_URI = environ.get('DATABASE_URI')
+    SECRET_KEY = environ['SECRET_KEY']
+    DATABASE_URI = environ['DATABASE_URI']
+
+    # set defaults
+    FLASK_APP = environ.get('FLASK_APP', 'app.py')
+    DEBUG = environ.get('DEBUG', False)
+    TESTING = environ.get('TESTING', False)
+    FLASK_ENV = environ.get('FLASK_ENV', 'production')
 
