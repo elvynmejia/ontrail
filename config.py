@@ -6,7 +6,7 @@ load_dotenv()
 class Config:
     """Base config."""
     SECRET_KEY = environ['SECRET_KEY']
-    DATABASE_URI = environ['DATABASE_URI']
+    SQLALCHEMY_DATABASE_URI = environ['SQLALCHEMY_DATABASE_URI']
 
     # set defaults
     FLASK_APP = environ.get('FLASK_APP', 'app.py')

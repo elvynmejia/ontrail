@@ -3,3 +3,6 @@ FLASK_APP=app.py flask run
 
 # Save requirements
 pip freeze > requirements.txt
+
+# install dependencies
+pip install -r requirements.txt
