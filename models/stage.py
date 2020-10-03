@@ -1,31 +1,69 @@
 from app import db
-from sqlalchemy import Column, Integer, String, Text, DateTime, Float, Boolean, ForeignKey
-from sqlalchemy.orm import relationship
-# from sqlalchemy.ext.declarative import declarative_base
 
-#Base = declarative_base()
+STATUSES = {
+    'incomplete': 'incomplete',
+    'completed': 'completed',
+    'cancelled': 'cancelled',	
+}
 
 class Stage(db.Model):
-    id = Column(
-    	  Integer,
+    id = db.Column(
+    	  db.Integer,
     	  primary_key=True,
     	  nullable=False,
     )
 
-    name = Column(
-        String,
+    title = db.Column(
+        db.String,
         nullable=False,
     )
 
-    lead_id = Column(
-    	  Integer,
-    	  ForeignKey("lead.id")
+    links = db.Column(
+    	  db.Text,
+    	  nullable=True
     )
 
-    lead = relationship(
-        "Lead",
-        back_populates="stages"
+    description = db.Column(
+    	  db.Text,
+    	  nullable=True
     )
+
+    notes = db.Column(
+    	  db.Text,
+    	  nullable=True
+    )
+
+    lead_id = db.Column(
+    	  db.Integer,
+    	  db.ForeignKey('lead.id'),
+    	  nullable=False
+    )
+
+    status = db.Column(
+    	  db.String,
+    	  nullable=False,
+    	  default=STATUSES['incomplete']
+    )
+
+    # relationships
+    # this is problematic right now
+    # lead = db.relationship(
+    #     'Lead',
+    #     backref="stage"
+    # )
 
     def __repr__(self):
-        return '<Stage %r>' % self.id
+        return (
+            'Stage(id = {}, title = {}, links = {}'
+            'description = {}, notes = {}, lead_id = {})'
+            'status = {}'
+            ''.format(
+            	    repr(self.id),
+            	    repr(self.title),
+            	    repr(self.links),
+            	    repr(self.description),
+            	    repr(self.notes),
+            	    repr(self.lead_id),
+            	    repr(self.status),
+            )
+        )
