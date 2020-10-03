@@ -1,11 +1,11 @@
-# from app import db
+from app import db
 from sqlalchemy import Column, Integer, String, Text, DateTime, Float, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
+#Base = declarative_base()
 
-class Stage(Base):
+class Stage(db.Model):
     id = Column(
     	  Integer,
     	  primary_key=True,
