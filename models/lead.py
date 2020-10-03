@@ -1,7 +1,21 @@
-from app import db
+# from app import db
+from sqlalchemy import Column, Integer, String, Text, DateTime, Float, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
 
-class Lead(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+Base = declarative_base()
+
+class Lead(Base):
+    id = Column(
+        Integer,
+        primary_key=True,
+        nullable=False
+    )
+
+    stages = relationship(
+        "Stage",
+        back_populates="lead"
+    )
 
     def __repr__(self):
         return '<Lead %r>' % self.id
