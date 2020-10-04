@@ -1,5 +1,6 @@
 import os
 import config
+import models
 
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
