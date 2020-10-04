@@ -1,4 +1,4 @@
-from app import db
+from db_config import db
 
 STATUSES = {
     "incomplete": "incomplete",

@@ -1,4 +1,4 @@
-from app import db
+from db_config import db
 
 STATUSES = {
     "unscheduled": "unscheduled",  # kind of doesn't make sense
@@ -13,7 +13,7 @@ STATUSES = {
 
 class Lead(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-
+    # company
     name = db.Column(db.String, nullable=False)
 
     contacts = db.Column(db.String, nullable=False)
