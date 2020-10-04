@@ -1,16 +1,8 @@
 import os
 import config
 import models
-
-from flask import Flask, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-
-app = Flask(__name__)
-app.config.from_object("config.Config")
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
+from db_config import db, migrate
+from flask import Flask, jsonify, request, current_app
 
 def health_check_ok():
     return "Ok"
@@ -23,10 +15,18 @@ def health_check_boom():
 def leads():
     return jsonify({"id": 1, "status": "accepted"})
 
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object("config.Config")
 
-# health API
-app.add_url_rule("/health/ok", view_func=health_check_ok, methods=["GET"])
-app.add_url_rule("/health/boom", view_func=health_check_boom, methods=["GET"])
+    db.init_app(app)
+    migrate.init_app(app, db)
 
-# leads API
-app.add_url_rule("/v1/leads", view_func=leads, methods=["GET"])
+    # health API
+    app.add_url_rule("/health/ok", view_func=health_check_ok, methods=["GET"])
+    app.add_url_rule("/health/boom", view_func=health_check_boom, methods=["GET"])
+
+    # leads API
+    app.add_url_rule("/v1/leads", view_func=leads, methods=["GET"])
+
+    return app
