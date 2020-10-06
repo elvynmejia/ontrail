@@ -9,6 +9,10 @@ class BaseRepo:
         raise NotImplementedError
 
     @classmethod
+    def entity(cls):
+        raise NotImplementedError
+
+    @classmethod
     def create(cls, **kwargs):
         record = cls.model()(**kwargs)
         db.session.add(record)

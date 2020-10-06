@@ -4,7 +4,10 @@ import models
 from seed import seed_bp
 
 from db_config import db, migrate
-from flask import Flask, jsonify, request, current_app
+from flask import Flask, jsonify, request
+from repos import LeadRepo
+from entities import LeadEntity
+
 
 def health_check_ok():
     return "Ok"
@@ -15,7 +18,9 @@ def health_check_boom():
 
 
 def leads():
-    return jsonify({"id": 1, "status": "accepted"})
+    leads = LeadRepo.find_all()
+    return LeadEntity(many=True).as_json(leads)
+
 
 def create_app():
     app = Flask(__name__)

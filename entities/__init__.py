@@ -1,0 +1,1 @@
+from .lead import LeadEntity
