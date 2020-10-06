@@ -7,4 +7,4 @@ class LeadEntity(Schema):
     # description = fields.Text()
 
     def as_json(self, record):
-        return self.dumps(record)
+        return self.dump(record)

@@ -19,7 +19,9 @@ def health_check_boom():
 
 def leads():
     leads = LeadRepo.find_all()
-    return LeadEntity(many=True).as_json(leads)
+    # find a way to call as_json automatically before the response
+    # is returrned to the client
+    return {"leads": LeadEntity(many=True).as_json(leads)}, 200
 
 
 def create_app():
