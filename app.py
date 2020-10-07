@@ -8,6 +8,10 @@ from flask import Flask, jsonify, request
 from repos import LeadRepo
 from entities import LeadEntity
 
+import pdb
+
+from marshmallow import ValidationError
+
 
 def health_check_ok():
     return "Ok"
@@ -17,11 +21,23 @@ def health_check_boom():
     raise SystemError  # change to internal error
 
 
-def leads():
+def get_leads():
     leads = LeadRepo.find_all()
     # find a way to call as_json automatically before the response
     # is returrned to the client
     return {"leads": LeadEntity(many=True).as_json(leads)}, 200
+
+
+def create_lead():
+    json_data = request.get_json()
+
+    try:
+        data = LeadEntity().load(json_data)
+    except ValidationError as err:
+        pdb.set_trace()
+
+    pdb.set_trace()
+    return {"lead": {"id": 1}}, 201
 
 
 def create_app():
@@ -38,6 +54,7 @@ def create_app():
     app.add_url_rule("/health/boom", view_func=health_check_boom, methods=["GET"])
 
     # leads API
-    app.add_url_rule("/v1/leads", view_func=leads, methods=["GET"])
+    app.add_url_rule("/v1/leads", view_func=get_leads, methods=["GET"])
+    app.add_url_rule("/v1/leads", view_func=create_lead, methods=["POST"])
 
     return app
