@@ -34,14 +34,41 @@ def create_lead():
     try:
         data = LeadEntity().load(json_data)
     except ValidationError as err:
-        return {"errors": [err.messages], "message": "Unprocessable Entity", "code": "UNPROCESSABLE_ENTITY"}, 422
+        return (
+            {
+                "errors": [err.messages],
+                "message": "Unprocessable Entity",
+                "code": "UNPROCESSABLE_ENTITY",
+            },
+            422,
+        )
 
     lead = LeadRepo.create(**data)
     return {"lead": LeadEntity().as_json(lead)}, 201
 
+
 def get_lead(id):
     lead = LeadRepo.find(id=id)
     return {"lead": LeadEntity().as_json(lead)}, 200
+
+
+def update_lead(id):
+    json_data = request.get_json()
+
+    try:
+        data = LeadEntity(partial=True).load(json_data)
+        updated_lead = LeadRepo.update(id=id, **data)
+        return ({"lead": LeadEntity().as_json(updated_lead)}, 200)
+    except ValidationError as err:
+        return (
+            {
+                "errors": [err.messages],
+                "message": "Unprocessable Entity",
+                "code": "UNPROCESSABLE_ENTITY",
+            },
+            422,
+        )
+
 
 def create_app():
     app = Flask(__name__)
@@ -60,5 +87,6 @@ def create_app():
     app.add_url_rule("/v1/leads/<id>", view_func=get_lead, methods=["GET"])
     app.add_url_rule("/v1/leads", view_func=get_leads, methods=["GET"])
     app.add_url_rule("/v1/leads", view_func=create_lead, methods=["POST"])
+    app.add_url_rule("/v1/leads/<id>", view_func=update_lead, methods=["PUT", "PATCH"])
 
     return app

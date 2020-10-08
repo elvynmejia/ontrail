@@ -38,8 +38,8 @@ class BaseRepo:
     @classmethod
     def update(cls, id, **kwargs):
         # update returns 1 or 0
-        record = cls.model().query.filter_by(id=id).update(**kwargs)
+        record = cls.model().query.filter_by(id=id).update({**kwargs})
 
         # should raise an error if no record
         if record:
-            return record
+            return cls.find(id=id)
