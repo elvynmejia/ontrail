@@ -5,12 +5,8 @@ from seed import seed_bp
 
 from db_config import db, migrate
 from flask import Flask, jsonify, request
-from repos import LeadRepo
-from entities import LeadEntity
-
+from actions.v1.leads import Create, List, Show, Update
 import pdb
-
-from marshmallow import ValidationError
 
 
 def health_check_ok():
@@ -19,55 +15,6 @@ def health_check_ok():
 
 def health_check_boom():
     raise SystemError  # change to internal error
-
-
-def get_leads():
-    leads = LeadRepo.find_all()
-    # find a way to call as_json automatically before the response
-    # is returrned to the client
-    return {"leads": LeadEntity(many=True).as_json(leads)}, 200
-
-
-def create_lead():
-    json_data = request.get_json()
-
-    try:
-        data = LeadEntity().load(json_data)
-    except ValidationError as err:
-        return (
-            {
-                "errors": [err.messages],
-                "message": "Unprocessable Entity",
-                "code": "UNPROCESSABLE_ENTITY",
-            },
-            422,
-        )
-
-    lead = LeadRepo.create(**data)
-    return {"lead": LeadEntity().as_json(lead)}, 201
-
-
-def get_lead(id):
-    lead = LeadRepo.find(id=id)
-    return {"lead": LeadEntity().as_json(lead)}, 200
-
-
-def update_lead(id):
-    json_data = request.get_json()
-
-    try:
-        data = LeadEntity(partial=True).load(json_data)
-        updated_lead = LeadRepo.update(id=id, **data)
-        return ({"lead": LeadEntity().as_json(updated_lead)}, 200)
-    except ValidationError as err:
-        return (
-            {
-                "errors": [err.messages],
-                "message": "Unprocessable Entity",
-                "code": "UNPROCESSABLE_ENTITY",
-            },
-            422,
-        )
 
 
 def create_app():
@@ -84,9 +31,17 @@ def create_app():
     app.add_url_rule("/health/boom", view_func=health_check_boom, methods=["GET"])
 
     # leads API
-    app.add_url_rule("/v1/leads/<id>", view_func=get_lead, methods=["GET"])
-    app.add_url_rule("/v1/leads", view_func=get_leads, methods=["GET"])
-    app.add_url_rule("/v1/leads", view_func=create_lead, methods=["POST"])
-    app.add_url_rule("/v1/leads/<id>", view_func=update_lead, methods=["PUT", "PATCH"])
+    app.add_url_rule(
+        "/v1/leads", view_func=List.as_view("vi_leads_list"), methods=["GET"]
+    )
+    app.add_url_rule(
+        "/v1/leads", view_func=Create.as_view("vi_leads_post"), methods=["POST"]
+    )
+    app.add_url_rule(
+        "/v1/leads/<id>", view_func=Update.as_view("vi_leads_patch"), methods=["PATCH"]
+    )
+    app.add_url_rule(
+        "/v1/leads/<id>", view_func=Show.as_view("vi_leads_show"), methods=["GET"]
+    )
 
     return app
