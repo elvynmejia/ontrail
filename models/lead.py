@@ -27,7 +27,7 @@ class Lead(db.Model):
 
     def __repr__(self):
         return (
-            "Lead(id = {}, name = {}, contacts = {}, description = {}"
+            "Lead(id = {}, name = {}, contacts = {}, description = {} "
             "status = {})"
             "".format(
                 repr(self.id),

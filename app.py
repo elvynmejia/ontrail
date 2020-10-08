@@ -34,10 +34,10 @@ def create_lead():
     try:
         data = LeadEntity().load(json_data)
     except ValidationError as err:
-        pdb.set_trace()
+        return {"errors": [err.messages], "message": "Unprocessable Entity", "code": "UNPROCESSABLE_ENTITY"}, 422
 
-    pdb.set_trace()
-    return {"lead": {"id": 1}}, 201
+    lead = LeadRepo.create(**data)
+    return {"lead": LeadEntity().as_json(lead)}, 201
 
 
 def create_app():
