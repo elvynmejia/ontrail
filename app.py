@@ -39,6 +39,9 @@ def create_lead():
     lead = LeadRepo.create(**data)
     return {"lead": LeadEntity().as_json(lead)}, 201
 
+def get_lead(id):
+    lead = LeadRepo.find(id=id)
+    return {"lead": LeadEntity().as_json(lead)}, 200
 
 def create_app():
     app = Flask(__name__)
@@ -54,6 +57,7 @@ def create_app():
     app.add_url_rule("/health/boom", view_func=health_check_boom, methods=["GET"])
 
     # leads API
+    app.add_url_rule("/v1/leads/<id>", view_func=get_lead, methods=["GET"])
     app.add_url_rule("/v1/leads", view_func=get_leads, methods=["GET"])
     app.add_url_rule("/v1/leads", view_func=create_lead, methods=["POST"])
 
