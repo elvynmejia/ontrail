@@ -8,8 +8,6 @@ import pdb
 
 class List(MethodView):
     def get(self):
-        
-
         leads = LeadRepo.find_all()
 
         # find a way to call as_json automatically before the response
