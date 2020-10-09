@@ -11,15 +11,17 @@ routes_bp = Blueprint("routes", __name__)
 
 # leads API
 routes_bp.add_url_rule(
-    "/v1/leads", view_func=ListLeads.as_view("vi_leads_list"), methods=["GET"]
+    "/v1/leads", view_func=ListLeads.as_view("v1_leads_list"), methods=["GET"]
 )
 
 routes_bp.add_url_rule(
-    "/v1/leads", view_func=CreateLead.as_view("vi_leads_post"), methods=["POST"]
+    "/v1/leads", view_func=CreateLead.as_view("v1_leads_post"), methods=["POST"]
 )
+
 routes_bp.add_url_rule(
-    "/v1/leads/<id>", view_func=UpdateLead.as_view("vi_leads_patch"), methods=["PATCH"]
+    "/v1/leads/<id>", view_func=UpdateLead.as_view("v1_leads_patch"), methods=["PATCH"]
 )
+
 routes_bp.add_url_rule(
-    "/v1/leads/<id>", view_func=ShowLead.as_view("vi_leads_show"), methods=["GET"]
+    "/v1/leads/<id>", view_func=ShowLead.as_view("v1_leads_show"), methods=["GET"]
 )
