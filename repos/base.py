@@ -17,7 +17,8 @@ class BaseRepo:
         record = cls.model()(**kwargs)
         db.session.add(record)
         db.session.commit()
-        return record
+        if record:
+            return record
 
     @classmethod
     def find(cls, **kwargs):
@@ -30,10 +31,7 @@ class BaseRepo:
     @classmethod
     def find_all(cls, **kwargs):
         records = cls.model().query.filter_by(**kwargs).all()
-
-        # should raise an error if no record
-        if len(records):
-            return records
+        return records
 
     @classmethod
     def update(cls, id, **kwargs):
