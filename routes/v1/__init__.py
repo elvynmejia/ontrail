@@ -8,7 +8,10 @@ from actions.v1.leads import (
 )
 
 from actions.v1.stages import (
-	Create as CreateStage
+    Create as CreateStage,
+    List as ListStages,
+    Show as ShowStage,
+    Update as UpdateStage,
 )
 
 routes_bp = Blueprint("routes", __name__)
@@ -19,11 +22,11 @@ routes_bp.add_url_rule(
 )
 
 routes_bp.add_url_rule(
-    "/v1/leads", view_func=CreateLead.as_view("v1_leads_post"), methods=["POST"]
+    "/v1/leads", view_func=CreateLead.as_view("v1_leads_create"), methods=["POST"]
 )
 
 routes_bp.add_url_rule(
-    "/v1/leads/<id>", view_func=UpdateLead.as_view("v1_leads_patch"), methods=["PATCH"]
+    "/v1/leads/<id>", view_func=UpdateLead.as_view("v1_leads_update"), methods=["PATCH"]
 )
 
 routes_bp.add_url_rule(
@@ -33,5 +36,19 @@ routes_bp.add_url_rule(
 
 # stages API
 routes_bp.add_url_rule(
-	  "/v1/stages", view_func=CreateStage.as_view("v1_stages_create"), methods=["POST"]
+    "/v1/stages", view_func=ListStages.as_view("v1_stages_list"), methods=["GET"]
+)
+
+routes_bp.add_url_rule(
+    "/v1/stages", view_func=CreateStage.as_view("v1_stages_create"), methods=["POST"]
+)
+
+routes_bp.add_url_rule(
+    "/v1/stages/<id>",
+    view_func=UpdateStage.as_view("v1_stages_update"),
+    methods=["PATCH"],
+)
+
+routes_bp.add_url_rule(
+    "/v1/stages/<id>", view_func=ShowStage.as_view("v1_stages_show"), methods=["GET"]
 )
