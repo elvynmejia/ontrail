@@ -4,11 +4,11 @@ from models import STAGE_STATUSES
 
 class StageEntity(Schema):
     id = fields.Int(dump_only=True)
-    title = fields.Str()
+    title = fields.Str(required=True)
     links = fields.Str()
     description = fields.Str()
     notes = fields.Str()
-    lead_id = fields.Int(dump_only=True)
+    lead_id = fields.Int(required=True)
     status = fields.Str(
         required=False, validate=validate.OneOf(STAGE_STATUSES.values())
     )

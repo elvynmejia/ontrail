@@ -7,7 +7,7 @@ class LeadEntity(Schema):
     name = fields.Str(required=True)
     contacts = fields.Str(required=True)
     description = fields.Str()
-    status = fields.Str(required=False, validate=validate.OneOf(LEAD_STATUSES.values()))
+    status = fields.Str(required=True, validate=validate.OneOf(LEAD_STATUSES.values()))
 
     leads = fields.List(
         fields.Nested(lambda: "StageEntity"), dump_only=True
