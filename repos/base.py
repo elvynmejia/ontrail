@@ -17,6 +17,7 @@ class BaseRepo:
         record = cls.model()(**kwargs)
         db.session.add(record)
         db.session.commit()
+
         if record:
             return record
 

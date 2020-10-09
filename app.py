@@ -1,11 +1,13 @@
 import os
 import config
 import models
+
 from seed import seed_bp
+from routes.v1 import routes_bp
 
 from db_config import db, migrate
 from flask import Flask, jsonify, request
-from actions.v1.leads import Create, List, Show, Update
+
 import pdb
 
 
@@ -25,23 +27,10 @@ def create_app():
     migrate.init_app(app, db)
 
     app.register_blueprint(seed_bp)
+    app.register_blueprint(routes_bp)
 
     # health API
     app.add_url_rule("/health/ok", view_func=health_check_ok, methods=["GET"])
     app.add_url_rule("/health/boom", view_func=health_check_boom, methods=["GET"])
-
-    # leads API
-    app.add_url_rule(
-        "/v1/leads", view_func=List.as_view("vi_leads_list"), methods=["GET"]
-    )
-    app.add_url_rule(
-        "/v1/leads", view_func=Create.as_view("vi_leads_post"), methods=["POST"]
-    )
-    app.add_url_rule(
-        "/v1/leads/<id>", view_func=Update.as_view("vi_leads_patch"), methods=["PATCH"]
-    )
-    app.add_url_rule(
-        "/v1/leads/<id>", view_func=Show.as_view("vi_leads_show"), methods=["GET"]
-    )
 
     return app
