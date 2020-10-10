@@ -1,7 +1,7 @@
 from inflection import underscore
 from models import MODELS
 from db_config import db
-
+from .error import RecordNotFound
 
 class BaseRepo:
     @classmethod
@@ -28,6 +28,7 @@ class BaseRepo:
         # should raise an error if no record
         if record:
             return record
+        raise RecordNotFound
 
     @classmethod
     def find_all(cls, **kwargs):
