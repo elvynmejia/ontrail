@@ -1,4 +1,6 @@
 import os
+from flask import Flask, jsonify, request
+
 import config
 import models
 
@@ -6,7 +8,6 @@ from seed import seed_bp
 from routes.v1 import routes_bp
 
 from db_config import db, migrate
-from flask import Flask, jsonify, request
 
 import pdb
 
@@ -19,9 +20,9 @@ def health_check_boom():
     raise SystemError  # change to internal error
 
 
-def create_app():
+def create_app(config="config.Dev"):
     app = Flask(__name__)
-    app.config.from_object("config.Config")
+    app.config.from_object(config)
 
     db.init_app(app)
     migrate.init_app(app, db)
