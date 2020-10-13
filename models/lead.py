@@ -1,6 +1,6 @@
 from db_config import db
 
-STATUSES = {
+STATES = {
     "unscheduled": "unscheduled",  # kind of doesn't make sense
     "phone_screen": "phone_screen",
     "take_home_or_technical": "take_home_or_technical",
@@ -14,13 +14,15 @@ STATUSES = {
 class Lead(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     # company
-    name = db.Column(db.String, nullable=False)
+    company_name = db.Column(db.String, nullable=False)
+
+    position = db.Column(db.String, nullable=True)
 
     contacts = db.Column(db.String, nullable=False)
 
     description = db.Column(db.Text, nullable=True)
 
-    status = db.Column(db.String, nullable=False, default=STATUSES.get("unscheduled"))
+    status = db.Column(db.String, nullable=False, default=STATES.get("unscheduled"))
 
     # relationships
     stages = db.relationship("Stage", backref="lead", lazy="dynamic")

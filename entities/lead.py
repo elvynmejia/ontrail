@@ -1,13 +1,14 @@
 from marshmallow import Schema, fields, validate
-from models import LEAD_STATUSES
+from models.lead import STATES
 
 
 class LeadEntity(Schema):
     id = fields.Int(dump_only=True)
-    name = fields.Str(required=True)
+    company_name = fields.Str(required=True)
+    position = fields.Str()
     contacts = fields.Str(required=True)
     description = fields.Str()
-    status = fields.Str(required=True, validate=validate.OneOf(LEAD_STATUSES.values()))
+    status = fields.Str(required=True, validate=validate.OneOf(STATES.values()))
 
     leads = fields.List(
         fields.Nested(lambda: "StageEntity"), dump_only=True

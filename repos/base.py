@@ -1,5 +1,4 @@
 from inflection import underscore
-from models import MODELS
 from db_config import db
 from .error import RecordNotFound
 

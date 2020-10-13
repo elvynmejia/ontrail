@@ -1,10 +1,5 @@
 from db_config import db
-
-STATUSES = {
-    "incomplete": "incomplete",
-    "completed": "completed",
-    "cancelled": "cancelled",
-}
+from models.lead import STATES
 
 
 class Stage(db.Model):
@@ -27,8 +22,7 @@ class Stage(db.Model):
 
     lead_id = db.Column(db.Integer, db.ForeignKey("lead.id"), nullable=False)
 
-    status = db.Column(db.String, nullable=False, default=STATUSES["incomplete"])
-
+    state = db.Column(db.String, nullable=False, default=STATES["phone_screen"])
     # relationships
     # this is problematic right now
     # lead = db.relationship(

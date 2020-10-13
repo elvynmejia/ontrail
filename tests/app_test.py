@@ -3,6 +3,7 @@ from db_config import db, migrate
 import pytest
 import pdb
 
+
 class TestApp(TestBase):
     def test_create_app(self, mocker):
         mocker.patch("db_config.db.init_app")
@@ -19,5 +20,4 @@ class TestApp(TestBase):
 
     def test_health_check_boom(self):
         with pytest.raises(SystemError) as excinfo:
-        		self.client.get("/health/boom")
-        
+            self.client.get("/health/boom")
