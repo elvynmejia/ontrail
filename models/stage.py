@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from db_config import db
-from models.lead import STATES
+from constants import STATES
 
 
 class Stage(db.Model):

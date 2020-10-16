@@ -2,6 +2,7 @@ from inflection import underscore
 from db_config import db
 from .error import RecordNotFound
 
+
 class BaseRepo:
     @classmethod
     def model(cls):

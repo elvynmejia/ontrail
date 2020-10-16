@@ -1,16 +1,7 @@
 from datetime import datetime
-
+from entities.lead import LeadEntity
 from db_config import db
-
-STATES = {
-    "unscheduled": "unscheduled",  # kind of doesn't make sense
-    "phone_screen": "phone_screen",
-    "take_home_or_technical": "take_home_or_technical",
-    "onsite": "onsite",
-    "offer": "offer",
-    "hired": "hired",
-    "not_a_good_fit": "not_a_good_fit",  # for me or for them
-}
+from constants import STATES
 
 
 class Lead(db.Model):
@@ -34,6 +25,9 @@ class Lead(db.Model):
     updated_at = db.Column(
         db.String, nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow()
     )
+
+    def as_json(self):
+        return LeadEntity().dump(self)
 
     def __repr__(self):
         return (

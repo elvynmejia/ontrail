@@ -1,7 +1,6 @@
 from test_base import TestBase
 from db_config import db, migrate
 import pytest
-import pdb
 
 
 class TestApp(TestBase):

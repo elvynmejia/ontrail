@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, validate
 # from models import STAGE_STATUSES
-from models.lead import STATES
+from constants import STATES
 
 class StageEntity(Schema):
     id = fields.Int(dump_only=True)

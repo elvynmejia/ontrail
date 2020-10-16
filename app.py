@@ -9,7 +9,6 @@ from routes.v1 import routes_bp
 
 from db_config import db, migrate
 
-import pdb
 
 
 def health_check_ok():
