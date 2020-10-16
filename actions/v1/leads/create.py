@@ -21,7 +21,7 @@ class Create(MethodView):
 
             data = LeadEntity().load(kwargs)
 
-        except (ValidationError, KeyError) as err:
+        except ValidationError as err:
             # this should be abstracted to an error handler
             error = UnprocessableEntity(errors=[err.messages])
             return error.as_json(), error.http_code

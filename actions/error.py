@@ -43,7 +43,7 @@ class UnprocessableEntity(ActionErrorBase):
 class Unauthorized(ActionErrorBase):
     def __init__(
         self,
-        http_code=422,
+        http_code=401,
         code="UNAUTHORIZED",
         message="Authentication is required",
         errors=[],
