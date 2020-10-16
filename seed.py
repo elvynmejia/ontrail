@@ -6,7 +6,7 @@ seed_bp = Blueprint('seed', __name__)
 
 @seed_bp.cli.command('create')
 def create():
-		lead_1 = Lead(name="Derbix", contacts="Sam L", description="AI startup based in San Francisco")
+		lead_1 = Lead(company_name="Derbix", contacts="Sam L", description="AI startup based in San Francisco")
 		db.session.add(lead_1)
 		db.session.commit()
 
@@ -15,7 +15,7 @@ def create():
 		db.session.commit()
 
 
-		lead_2 = Lead(name="Gem", contacts="Einas Had", description="Recruiting platform startup based in San Francisco")
+		lead_2 = Lead(company_name="Gem", contacts="Einas Had", description="Recruiting platform startup based in San Francisco")
 		db.session.add(lead_2)
 		db.session.commit()
 

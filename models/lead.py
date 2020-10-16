@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from db_config import db
 
 STATES = {
@@ -27,15 +29,24 @@ class Lead(db.Model):
     # relationships
     stages = db.relationship("Stage", backref="lead", lazy="dynamic")
 
+    created_at = db.Column(db.String, nullable=False, default=datetime.utcnow())
+
+    updated_at = db.Column(
+        db.String, nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow()
+    )
+
     def __repr__(self):
         return (
-            "Lead(id = {}, name = {}, contacts = {}, description = {} "
-            "status = {})"
+            "Lead(id = {}, company_name = {}, position = {} contacts = {}, description = {} "
+            "status = {}, created_at = {}, updated_at = {})"
             "".format(
                 repr(self.id),
-                repr(self.name),
+                repr(self.company_name),
+                repr(self.position),
                 repr(self.contacts),
                 repr(self.description),
                 repr(self.status),
+                repr(self.created_at),
+                repr(self.updated_at),
             )
         )

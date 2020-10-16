@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from db_config import db
 from models.lead import STATES
 
@@ -29,12 +31,17 @@ class Stage(db.Model):
     #     'Lead',
     #     backref="stage"
     # )
+    created_at = db.Column(db.String, nullable=False, default=datetime.utcnow())
+
+    updated_at = db.Column(
+        db.String, nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow()
+    )
 
     def __repr__(self):
         return (
-            "Stage(id = {}, title = {}, links = {}"
-            "description = {}, notes = {}, lead_id = {})"
-            "status = {}"
+            "Stage(id = {}, title = {}, links = {} "
+            "description = {}, notes = {}, lead_id = {} "
+            "state = {}, created_at = {}, updated_at = {})"
             "".format(
                 repr(self.id),
                 repr(self.title),
@@ -42,6 +49,8 @@ class Stage(db.Model):
                 repr(self.description),
                 repr(self.notes),
                 repr(self.lead_id),
-                repr(self.status),
+                repr(self.state),
+                repr(self.created_at),
+                repr(self.updated_at),
             )
         )
