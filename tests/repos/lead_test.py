@@ -1,10 +1,6 @@
 from tests.test_base import TestBase
 from repos import LeadRepo
 
-# from db_config import db, migrate
-# import pytest
-import pdb
-
 
 class TestLeadRepo(TestBase):
     def test_create(self):

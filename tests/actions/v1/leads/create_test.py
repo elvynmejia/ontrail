@@ -1,8 +1,8 @@
 from tests.test_base import TestBase
 from repos import LeadRepo
-import pdb
 
-class TestExample(TestBase):
+
+class TestCreate(TestBase):
     def test_create_success(self):
         response = self.client.post(
             "/v1/leads",
@@ -25,4 +25,7 @@ class TestExample(TestBase):
             },
         )
         assert response.status_code == 422
-        assert response.get_json()["errors"][0]["company_name"][0] == "Field may not be null."
+        assert (
+            response.get_json()["errors"][0]["company_name"][0]
+            == "Field may not be null."
+        )

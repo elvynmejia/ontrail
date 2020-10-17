@@ -28,7 +28,7 @@ class BaseRepo:
         # should raise an error if no record
         if record:
             return record
-        raise RecordNotFound
+        raise RecordNotFound()
 
     @classmethod
     def find_all(cls, **kwargs):

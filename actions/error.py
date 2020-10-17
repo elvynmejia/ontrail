@@ -12,7 +12,7 @@ class ActionErrorBase(BaseException):
     def as_json(self):
         return {
             "code": self.code,
-            "htttp_code": self.http_code,
+            "http_code": self.http_code,
             "message": self.message,
             "errors": self.errors,
         }
