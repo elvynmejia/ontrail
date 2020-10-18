@@ -30,7 +30,7 @@ class Update(MethodView):
 
             updated_lead = LeadRepo.update(id=lead.id, **data)
 
-            return ({"lead": LeadEntity().as_json(updated_lead)}, 200)
+            return ({"lead": updated_lead.as_json()}, 200)
         except ValidationError as err:
             error = UnprocessableEntity(errors=[err.messages])
             return error.as_json(), error.http_code
