@@ -1,7 +1,9 @@
 from flask.views import MethodView, request
 from marshmallow import ValidationError
 
-from repos import StageRepo
+from repos import StageRepo, LeadRepo
+from repos.error import RecordNotFound
+from actions.error import UnprocessableEntity, NotFound
 from entities import StageEntity
 
 
@@ -10,16 +12,29 @@ class Create(MethodView):
         json_data = request.get_json()
 
         try:
-            data = StageEntity().load(json_data)
-        except ValidationError as err:
-            return (
-                {
-                    "errors": [err.messages],
-                    "message": "Unprocessable Entity",
-                    "code": "UNPROCESSABLE_ENTITY",
-                },
-                422,
-            )
+            params = {
+                "title": json_data.get("title"),
+                "links": json_data.get("links"),
+                "description": json_data.get("description"),
+                "notes": json_data.get("notes"),
+                "lead_id": json_data.get("lead_id"),
+                "state": json_data.get("state"),
+            }
 
-        stage = StageRepo.create(**data)
-        return {"stage": StageEntity().as_json(stage)}, 201
+            data = StageEntity().load(params)
+
+        except ValidationError as err:
+            # this should be abstracted to an error handler
+            error = UnprocessableEntity(errors=[err.messages])
+            return error.as_json(), error.http_code
+
+        try:
+            lead = LeadRepo.find(id=params["lead_id"])
+        except RecordNotFound as err:
+            error = NotFound(
+                message="Cannot find Lead by given lead_id {}".format(params["lead_id"])
+            )
+            return error.as_json(), error.http_code
+
+        stage = StageRepo.create(**{**data, "lead_id": lead.id})
+        return {"stage": stage.as_json()}, 201

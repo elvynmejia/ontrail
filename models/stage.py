@@ -2,6 +2,7 @@ from datetime import datetime
 
 from db_config import db
 from constants import STATES
+from entities import StageEntity
 
 
 class Stage(db.Model):
@@ -36,6 +37,9 @@ class Stage(db.Model):
     updated_at = db.Column(
         db.String, nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow()
     )
+
+    def as_json(self):
+        return StageEntity().dump(self)
 
     def __repr__(self):
         return (

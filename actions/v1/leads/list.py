@@ -5,7 +5,6 @@ from repos import LeadRepo
 from entities import LeadEntity
 
 
-
 class List(MethodView):
     def get(self):
         page = 1
