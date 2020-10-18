@@ -1,4 +1,4 @@
-from inflection import underscore
+from sqlalchemy import desc
 from db_config import db
 from .error import RecordNotFound
 
@@ -43,3 +43,10 @@ class BaseRepo:
         # should raise an error if no record
         if record:
             return cls.find(id=id)
+
+    @classmethod
+    def paginate(cls, page=1, per_page=20):
+        query = (
+            cls.model().query.order_by(desc(cls.model().id)).paginate(page, per_page)
+        )
+        return query.items, query.total  # probably expensice to run total

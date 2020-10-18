@@ -5,10 +5,11 @@ from repos import LeadRepo
 from entities import LeadEntity
 
 
+
 class List(MethodView):
     def get(self):
-        leads = LeadRepo.find_all()
-
-        # find a way to call as_json automatically before the response
-        # is returrned to the client
-        return ({"leads": LeadEntity(many=True).as_json(leads)}, 200)
+        page = 1
+        per_page = 10
+        result, total = LeadRepo.paginate(page, per_page)
+        leads = list(map(lambda lead: lead.as_json(), result))
+        return ({"leads": leads}, 200)

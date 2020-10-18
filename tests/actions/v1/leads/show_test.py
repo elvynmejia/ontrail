@@ -2,7 +2,6 @@ from tests.test_base import TestBase
 from repos import LeadRepo
 
 
-
 class TestShow(TestBase):
     def test_success(self):
         lead = LeadRepo.create(
