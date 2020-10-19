@@ -11,9 +11,8 @@ class TestList(TestBase):
         )
 
         for x in range(3):
-            response = self.client.post(
-                "/v1/stages",
-                json={
+            StageRepo.create(
+                **{
                     "title": "Gloria <> Elvyn | Technical",
                     "links": "",
                     "description": "See how you go about solving a technical problem",
