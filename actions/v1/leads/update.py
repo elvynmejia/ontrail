@@ -5,9 +5,13 @@ from repos import LeadRepo
 from repos.error import RecordNotFound
 from entities import LeadEntity
 from actions.error import NotFound, UnprocessableEntity
+from decorators import validate_id
 
 
 class Update(MethodView):
+
+    decorators = [validate_id]
+
     def patch(self, id):
         try:
             lead = LeadRepo.find(id=id)
