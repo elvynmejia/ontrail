@@ -20,10 +20,10 @@ class Lead(db.Model):
     # relationships
     stages = db.relationship("Stage", backref="lead", lazy="dynamic")
 
-    created_at = db.Column(db.String, nullable=False, default=datetime.utcnow())
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
 
     updated_at = db.Column(
-        db.String, nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow()
+        db.DateTime, nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow()
     )
 
     def as_json(self):

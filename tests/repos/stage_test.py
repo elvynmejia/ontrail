@@ -1,3 +1,4 @@
+from datetime import datetime
 from tests.test_base import TestBase
 from models.stage import STATES
 from repos import StageRepo, LeadRepo
@@ -15,6 +16,8 @@ class TestStageRepo(TestBase):
             title="phone screen with Gloria",
             description="See if there's match",
             lead_id=lead.id,
+            start_at=datetime.utcnow(),
+            end_at=datetime.utcnow(),
         )
 
         assert stage.title == "phone screen with Gloria"
@@ -34,6 +37,8 @@ class TestStageRepo(TestBase):
             description="See if there's match",
             lead_id=lead.id,
             state=STATES["phone_screen"],
+            start_at=datetime.utcnow(),
+            end_at=datetime.utcnow(),
         )
 
         assert stage.title == "phone screen with Gloria"
@@ -52,6 +57,8 @@ class TestStageRepo(TestBase):
             title="phone screen with Gloria",
             description="See if there's match",
             lead_id=lead.id,
+            start_at=datetime.utcnow(),
+            end_at=datetime.utcnow(),
         )
 
         stage = StageRepo.find(id=stage_1.id)
@@ -74,6 +81,8 @@ class TestStageRepo(TestBase):
             title="phone screen with Gloria",
             description="See if there's match",
             lead_id=lead.id,
+            start_at=datetime.utcnow(),
+            end_at=datetime.utcnow(),
         )
         updated_stage = StageRepo.update(id=lead.id, title="changedme")
         assert updated_stage.title == "changedme"

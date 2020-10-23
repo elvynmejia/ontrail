@@ -1,24 +1,43 @@
+from datetime import datetime
 from flask import Blueprint
 from db_config import db
-from models import Lead, Stage
+from repos import LeadRepo, StageRepo
 
-seed_bp = Blueprint('seed', __name__)
+seed_bp = Blueprint("seed", __name__)
 
-@seed_bp.cli.command('create')
+
+@seed_bp.cli.command("create")
 def create():
-		lead_1 = Lead(company_name="Derbix", contacts="Sam L", description="AI startup based in San Francisco")
-		db.session.add(lead_1)
-		db.session.commit()
+    lead = LeadRepo.create(
+        company_name="Gem",
+        contacts="Elvyn M",
+        description="Not gonna make it startup",
+    )
 
-		stage_1 = Stage(lead_id=lead_1.id, title="Intro call")
-		db.session.add(stage_1)
-		db.session.commit()
+    StageRepo.create(
+        title="Gloria <> Elvyn | Technical",
+        links="",
+        description="See how you go about solving a technical problem",
+        notes="",
+        lead_id=lead.id,
+        state="phone_screen",
+        start_at=datetime.utcnow(),
+        end_at=datetime.utcnow(),
+    )
 
+    lead_1 = LeadRepo.create(
+        company_name="Gem",
+        contacts="Elvyn M",
+        description="Not gonna make it startup",
+    )
 
-		lead_2 = Lead(company_name="Gem", contacts="Einas Had", description="Recruiting platform startup based in San Francisco")
-		db.session.add(lead_2)
-		db.session.commit()
-
-		stage_2 = Stage(lead_id=lead_2.id, title="Intro call")
-		db.session.add(stage_2)
-		db.session.commit()
+    StageRepo.create(
+        title="Gloria <> Elvyn | Technical",
+        links="",
+        description="See how you go about solving a technical problem",
+        notes="",
+        lead_id=lead_1.id,
+        state="phone_screen",
+        start_at=datetime.utcnow(),
+        end_at=datetime.utcnow(),
+    )

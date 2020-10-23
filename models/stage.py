@@ -32,11 +32,17 @@ class Stage(db.Model):
     #     'Lead',
     #     backref="stage"
     # )
-    created_at = db.Column(db.String, nullable=False, default=datetime.utcnow())
+
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow()) # DateTime
 
     updated_at = db.Column(
-        db.String, nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow()
+        db.DateTime, nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow()
     )
+
+    start_at = db.Column(db.DateTime, nullable=False)
+
+    end_at = db.Column(db.DateTime, nullable=False)
+
 
     def as_json(self):
         return StageEntity().dump(self)
@@ -54,6 +60,8 @@ class Stage(db.Model):
                 repr(self.notes),
                 repr(self.lead_id),
                 repr(self.state),
+                repr(self.start_at),
+                repr(self.end_at),
                 repr(self.created_at),
                 repr(self.updated_at),
             )

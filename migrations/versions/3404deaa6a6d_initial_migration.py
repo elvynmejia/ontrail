@@ -1,8 +1,8 @@
 """Initial migration.
 
-Revision ID: 771d7baa44e5
+Revision ID: 3404deaa6a6d
 Revises: 
-Create Date: 2020-10-14 08:21:25.708940
+Create Date: 2020-10-19 22:04:44.825749
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '771d7baa44e5'
+revision = '3404deaa6a6d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,8 +25,8 @@ def upgrade():
     sa.Column('contacts', sa.String(), nullable=False),
     sa.Column('description', sa.Text(), nullable=True),
     sa.Column('status', sa.String(), nullable=False),
-    sa.Column('created_at', sa.String(), nullable=False),
-    sa.Column('updated_at', sa.String(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('stage',
@@ -37,8 +37,10 @@ def upgrade():
     sa.Column('notes', sa.Text(), nullable=True),
     sa.Column('lead_id', sa.Integer(), nullable=False),
     sa.Column('state', sa.String(), nullable=False),
-    sa.Column('created_at', sa.String(), nullable=False),
-    sa.Column('updated_at', sa.String(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), nullable=False),
+    sa.Column('start_at', sa.DateTime(), nullable=False),
+    sa.Column('end_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['lead_id'], ['lead.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

@@ -1,3 +1,4 @@
+from datetime import datetime
 from tests.test_base import TestBase
 from repos import LeadRepo
 
@@ -19,6 +20,8 @@ class TestCreate(TestBase):
                 "notes": "",
                 "lead_id": lead.id,
                 "state": "phone_screen",
+                "start_at": datetime.utcnow().isoformat(),
+                "end_at": datetime.utcnow().isoformat(),
             },
         )
 
@@ -34,6 +37,8 @@ class TestCreate(TestBase):
                 "description": "See how you go about solving a technical problem",
                 "notes": "",
                 "state": "phone_screen",
+                "start_at": datetime.utcnow().isoformat(),
+                "end_at": datetime.utcnow().isoformat(),
             },
         )
 
@@ -52,6 +57,8 @@ class TestCreate(TestBase):
                 "description": "See how you go about solving a technical problem",
                 "notes": "",
                 "state": "phone_screen",
+                "start_at": datetime.utcnow().isoformat(),
+                "end_at": datetime.utcnow().isoformat(),
                 "lead_id": lead_id__does_not_exist,
             },
         )

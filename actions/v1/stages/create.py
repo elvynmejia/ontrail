@@ -19,6 +19,8 @@ class Create(MethodView):
                 "notes": json_data.get("notes"),
                 "lead_id": json_data.get("lead_id"),
                 "state": json_data.get("state"),
+                "start_at": json_data.get("start_at"),
+                "end_at": json_data.get("end_at"),
             }
 
             data = StageEntity().load(params)

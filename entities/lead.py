@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, validate, post_load
+from marshmallow import Schema, fields, validate
 from constants import STATES
 
 
@@ -8,15 +8,16 @@ class LeadEntity(Schema):
     position = fields.Str(allow_none=True)
     contacts = fields.Str(required=True)
     description = fields.Str(allow_none=True)
-    status = fields.Str(required=False, validate=validate.OneOf(STATES.values()), allow_none=True)
+    status = fields.Str(
+        required=False, validate=validate.OneOf(STATES.values()), allow_none=True
+    )
 
     leads = fields.List(
         fields.Nested(lambda: "StageEntity"), dump_only=True
-    )  # circular dep
+    )
 
-    # @post_load
-    # def make_user(self, data, **kwargs):
-    #     return Lead(**data)
+    created_at = fields.DateTime(dump_only=True)
+    updated_at = fields.DateTime(dump_only=True)
 
     def as_json(self, record):
         return self.dump(record)

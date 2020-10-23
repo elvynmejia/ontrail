@@ -1,3 +1,4 @@
+from datetime import datetime
 from tests.test_base import TestBase
 from repos import StageRepo, LeadRepo
 
@@ -19,6 +20,8 @@ class TestList(TestBase):
                     "notes": "",
                     "lead_id": lead.id,
                     "state": "phone_screen",
+                    "start_at": datetime.utcnow(),
+                    "end_at": datetime.utcnow(),
                 },
             )
 

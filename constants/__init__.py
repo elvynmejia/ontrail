@@ -7,3 +7,6 @@ STATES = {
     "hired": "hired",
     "not_a_good_fit": "not_a_good_fit",  # for me or for them
 }
+
+
+DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
