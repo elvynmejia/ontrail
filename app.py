@@ -1,5 +1,6 @@
 import os
 from flask import Flask, jsonify, request
+from dotenv import load_dotenv
 
 import config
 import models
@@ -9,7 +10,7 @@ from routes.v1 import routes_bp
 
 from db_config import db, migrate
 
-
+load_dotenv()
 
 def health_check_ok():
     return "Ok"
@@ -19,9 +20,17 @@ def health_check_boom():
     raise SystemError  # change to internal error
 
 
-def create_app(config="config.Dev"):
+def create_app():
     app = Flask(__name__)
-    app.config.from_object(config)
+
+    env = app.config["ENV"]
+
+    if env == "production":
+        app.config.from_object("config.BaseConfig")
+    elif env == "test":
+        app.config.from_object("config.Dev")
+    else:
+        app.config.from_object("config.Test")
 
     db.init_app(app)
     migrate.init_app(app, db)
