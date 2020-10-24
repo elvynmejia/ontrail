@@ -8,4 +8,4 @@ pip freeze > requirements.txt
 pip install -r requirements.txt
 
 # run tests
-PYTHONPATH=. py.test
+py.test
