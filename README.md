@@ -1,5 +1,5 @@
 # run app with
-FLASK_APP=app.py flask run
+flask run
 
 # Save requirements
 pip freeze > requirements.txt
