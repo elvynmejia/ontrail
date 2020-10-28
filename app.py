@@ -9,8 +9,10 @@ from seed import seed_bp
 from routes.v1 import routes_bp
 
 from db_config import db, migrate
+import pdb
 
 load_dotenv()
+
 
 def health_check_ok():
     return "Ok"
@@ -20,7 +22,7 @@ def health_check_boom():
     raise SystemError  # change to internal error
 
 
-def create_app():
+def create_app(testing=False):
     app = Flask(__name__)
 
     env = environ["FLASK_ENV"]
@@ -29,7 +31,9 @@ def create_app():
         app.config.from_object("config.BaseConfig")
     elif env == "development":
         app.config.from_object("config.Dev")
-    else:
+
+    if testing:
+        pdb.set_trace()
         app.config.from_object("config.Test")
 
     db.init_app(app)
