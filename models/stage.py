@@ -3,9 +3,11 @@ from datetime import datetime
 from db_config import db
 from constants import STATES
 from entities import StageEntity
+from models.lead import Lead
 
 
 class Stage(db.Model):
+    __tablename__ = "stages"
     id = db.Column(
         db.Integer,
         primary_key=True,
@@ -13,19 +15,19 @@ class Stage(db.Model):
     )
 
     title = db.Column(
-        db.String,
+        db.String(100),
         nullable=False,
     )
 
-    links = db.Column(db.Text, nullable=True)
+    links = db.Column(db.Text(400), nullable=True)
 
-    description = db.Column(db.Text, nullable=True)
+    description = db.Column(db.Text(400), nullable=True)
 
-    notes = db.Column(db.Text, nullable=True)
+    notes = db.Column(db.Text(400), nullable=True)
 
-    lead_id = db.Column(db.Integer, db.ForeignKey("lead.id"), nullable=False)
+    lead_id = db.Column(db.Integer, db.ForeignKey(Lead.id), nullable=False)
 
-    state = db.Column(db.String, nullable=False, default=STATES["phone_screen"])
+    state = db.Column(db.String(100), nullable=False, default=STATES["phone_screen"])
     # relationships
     # this is problematic right now
     # lead = db.relationship(
@@ -33,16 +35,20 @@ class Stage(db.Model):
     #     backref="stage"
     # )
 
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow()) # DateTime
+    created_at = db.Column(
+        db.DateTime, nullable=False, default=datetime.utcnow()
+    )  # DateTime
 
     updated_at = db.Column(
-        db.DateTime, nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow()
+        db.DateTime,
+        nullable=False,
+        default=datetime.utcnow(),
+        onupdate=datetime.utcnow(),
     )
 
     start_at = db.Column(db.DateTime, nullable=False)
 
     end_at = db.Column(db.DateTime, nullable=False)
-
 
     def as_json(self):
         return StageEntity().dump(self)

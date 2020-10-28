@@ -5,25 +5,35 @@ from constants import STATES
 
 
 class Lead(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    # company
-    company_name = db.Column(db.String, nullable=False)
+    __tablename__ = "leads"
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+        nullable=False,
+    )
 
-    position = db.Column(db.String, nullable=True)
+    company_name = db.Column(db.String(100), nullable=False)
 
-    contacts = db.Column(db.String, nullable=False)
+    position = db.Column(db.String(100), nullable=True)
 
-    description = db.Column(db.Text, nullable=True)
+    contacts = db.Column(db.String(100), nullable=False)
 
-    status = db.Column(db.String, nullable=False, default=STATES.get("unscheduled"))
+    description = db.Column(db.Text(400), nullable=True)
+
+    status = db.Column(
+        db.String(100), nullable=False, default=STATES.get("unscheduled")
+    )
 
     # relationships
-    stages = db.relationship("Stage", backref="lead", lazy="dynamic")
+    # stages = db.relationship("Stage", backref="lead", lazy="dynamic")
 
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
 
     updated_at = db.Column(
-        db.DateTime, nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow()
+        db.DateTime,
+        nullable=False,
+        default=datetime.utcnow(),
+        onupdate=datetime.utcnow(),
     )
 
     def as_json(self):
