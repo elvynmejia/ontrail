@@ -1,4 +1,4 @@
-import os
+from os import environ
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
 
@@ -23,11 +23,11 @@ def health_check_boom():
 def create_app():
     app = Flask(__name__)
 
-    env = app.config["ENV"]
+    env = environ["FLASK_ENV"]
 
     if env == "production":
         app.config.from_object("config.BaseConfig")
-    elif env == "test":
+    elif env == "development":
         app.config.from_object("config.Dev")
     else:
         app.config.from_object("config.Test")
