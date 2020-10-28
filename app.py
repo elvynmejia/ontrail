@@ -9,7 +9,7 @@ from seed import seed_bp
 from routes.v1 import routes_bp
 
 from db_config import db, migrate
-import pdb
+
 
 load_dotenv()
 
@@ -33,7 +33,6 @@ def create_app(testing=False):
         app.config.from_object("config.Dev")
 
     if testing:
-        pdb.set_trace()
         app.config.from_object("config.Test")
 
     db.init_app(app)
