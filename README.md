@@ -1,15 +1,23 @@
-# setup and install dependencies
-`python3.6 -m venv venv` # creates a virtual environment
-`source venv/bin/activate` # activates virtual environment
-`venv/bin/flask pip install -r requirements.txt` # install requirements
+**Follow these instructions https://github.com/elvynmejia/vm/blob/main/README.md before continuing**
 
-# Install and save a package
-`venv/bin/flask pip install numpy` # for example
-`venv/bin/flask pip freeze > requirements.txt`
+# project setup
+Clone this repo into your vm working directory
 
-# run app with
-`venv/bin/flask run --host "0.0.0.0"`
+`git clone https://github.com/elvynmejia/ontrail.git`
+`vagrant ssh # ssh into your vm`
+`cd /vagrant/ontrail`
 
+# intall dependecies
+`make install`
+
+# run app
+`make run`
+
+# seed database
+`make seed`
+
+# clean
+`make clean`
 
 # run tests
 py.test
