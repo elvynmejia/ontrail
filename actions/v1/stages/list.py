@@ -7,7 +7,8 @@ from entities import StageEntity
 
 class List(MethodView):
     def get(self):
-        result, total = StageRepo.paginate()
+        lead_id = request.args.get("lead_id")
+        result, total = StageRepo.paginate(**{"lead_id": lead_id })
 
         # find a way to call as_json automatically before the response
         # is returrned to the client

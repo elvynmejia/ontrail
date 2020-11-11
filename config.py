@@ -21,7 +21,7 @@ class Dev(BaseConfig):
 
     DEBUG = True
     FLASK_ENV = "development"
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql" + "://ontrail:password@localhost:3306/ontrail_dev"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql" + "://root:root@localhost:3306/ontrail_dev"
 
 
 class Test(BaseConfig):
@@ -30,6 +30,6 @@ class Test(BaseConfig):
     DEBUG = True
     TESTING = True
     FLASK_ENV = "test"
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql" + "://ontrail:password@localhost:3306/ontrail_test"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql" + "://root:root@localhost:3306/ontrail_test"
     TESTING = True
 
