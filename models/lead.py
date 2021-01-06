@@ -14,7 +14,7 @@ class Lead(db.Model):
 
     company_name = db.Column(db.String(100), nullable=False)
 
-    position = db.Column(db.String(100), nullable=True)
+    position = db.Column(db.String(100), nullable=False)
 
     contacts = db.Column(db.String(100), nullable=False)
 
@@ -23,6 +23,8 @@ class Lead(db.Model):
     status = db.Column(
         db.String(100), nullable=False, default=STATES.get("unscheduled")
     )
+
+    reference = db.Column(db.String(100), nullable=True)
 
     # relationships
     # stages = db.relationship("Stage", backref="lead", lazy="dynamic")
@@ -50,6 +52,7 @@ class Lead(db.Model):
                 repr(self.contacts),
                 repr(self.description),
                 repr(self.status),
+                repr(self.reference),
                 repr(self.created_at),
                 repr(self.updated_at),
             )

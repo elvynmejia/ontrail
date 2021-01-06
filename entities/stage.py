@@ -1,5 +1,6 @@
 from marshmallow import Schema, fields, validate
 from constants import STATES
+from constants import DATETIME_FORMAT
 
 
 class StageEntity(Schema):
@@ -10,10 +11,12 @@ class StageEntity(Schema):
     notes = fields.Str()
     lead_id = fields.Int(required=True)
     state = fields.Str(required=False, validate=validate.OneOf(STATES.values()))
-    start_at = fields.DateTime(required=True)
-    end_at = fields.DateTime(required=True)
-    created_at = fields.DateTime(dump_only=True)
-    updated_at = fields.DateTime(dump_only=True)
+    reference = fields.Str(required=False)
 
-    def as_json(self, record):
-        return self.dump(record)
+    start_at = fields.DateTime(required=False, format=DATETIME_FORMAT)
+    end_at = fields.DateTime(required=False, format=DATETIME_FORMAT)
+    created_at = fields.DateTime(dump_only=True, format=DATETIME_FORMAT)
+    updated_at = fields.DateTime(dump_only=True, format=DATETIME_FORMAT)
+
+    # def as_json(self, record):
+    #     return self.dump(record)
