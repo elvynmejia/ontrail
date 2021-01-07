@@ -12,6 +12,7 @@ def create():
         company_name="Gem",
         contacts="Elvyn M",
         description="Not gonna make it startup",
+        position="Sr Backend Engineer"
     )
 
     StageRepo.create(
@@ -21,23 +22,25 @@ def create():
         notes="",
         lead_id=lead.id,
         state="phone_screen",
-        start_at=datetime.utcnow(),
-        end_at=datetime.utcnow(),
+        start_at=datetime.utcnow().isoformat(),
+        end_at=datetime.utcnow().isoformat(),
     )
 
     lead_1 = LeadRepo.create(
         company_name="Gem",
         contacts="Elvyn M",
         description="Not gonna make it startup",
+        position="Software Engineer"
     )
 
-    StageRepo.create(
-        title="Gloria <> Elvyn | Technical",
-        links="",
-        description="See how you go about solving a technical problem",
-        notes="",
-        lead_id=lead_1.id,
-        state="phone_screen",
-        start_at=datetime.utcnow(),
-        end_at=datetime.utcnow(),
-    )
+    for x in range(5):
+        StageRepo.create(
+            title="Gloria {} <> Elvyn | Technical".format(x),
+            links="",
+            description="See how you go about solving a technical problem {}".format(x),
+            notes="",
+            lead_id=lead_1.id,
+            state="phone_screen",
+            start_at=datetime.utcnow().isoformat(),
+            end_at=datetime.utcnow().isoformat(),
+        )
