@@ -10,6 +10,7 @@ class TestCreate(TestBase):
                 "company_name": "Gem",
                 "position": "Senior Fullstack Engineer",
                 "contacts": "Gloria",
+                "position": "Software Engineer",
             },
         )
 
@@ -22,6 +23,7 @@ class TestCreate(TestBase):
             json={
                 "position": "Senior Fullstack Engineer",
                 "contacts": "Gloria",
+                "position": "Software Engineer",
             },
         )
         assert response.status_code == 422

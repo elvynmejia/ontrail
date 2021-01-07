@@ -9,6 +9,7 @@ class TestList(TestBase):
                 company_name="Test {}".format(x),
                 contacts="Elvyn M",
                 description="Not gonna make it startup #{}".format(x),
+                position="Software Engineer"
             )
         response = self.client.get("/v1/leads")
 

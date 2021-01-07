@@ -8,6 +8,7 @@ class TestShow(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
+            position="Software Engineer",
         )
 
         response = self.client.get(
@@ -22,6 +23,7 @@ class TestShow(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
+            position="Software Engineer",
         )
 
         response = self.client.get(
@@ -35,6 +37,7 @@ class TestShow(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
+            position="Software Engineer",
         )
 
         response = self.client.get(
