@@ -47,6 +47,9 @@ class BaseRepo:
     @classmethod
     def paginate(cls, page=1, per_page=20, **kwargs):
         query = (
-            cls.model().query.filter_by(**kwargs).order_by(desc(cls.model().id)).paginate(page, per_page)
+            cls.model()
+            .query.filter_by(**kwargs)
+            .order_by(desc(cls.model().id))
+            .paginate(page, per_page)
         )
         return query.items, query.total  # probably expensice to run total
