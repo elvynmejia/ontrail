@@ -3,6 +3,7 @@ from functools import wraps
 from validators import IdValidator
 from actions.error import UnprocessableEntity
 
+
 def validate_id(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
