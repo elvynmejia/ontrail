@@ -1,10 +1,11 @@
 from datetime import datetime
 from tests.test_base import TestBase
 from repos import LeadRepo, StageRepo
+from constants import DATETIME_FORMAT
 
 
-start_at = datetime.utcnow()
-end_at = datetime.utcnow()
+start_at = datetime.utcnow().strftime(DATETIME_FORMAT)
+end_at = datetime.utcnow().strftime(DATETIME_FORMAT)
 
 
 def get_params(lead_id=None):
@@ -20,12 +21,13 @@ def get_params(lead_id=None):
     }
 
 
-class TestUpdate(TestBase):        
+class TestUpdate(TestBase):
     def test_success(self):
         lead = LeadRepo.create(
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
+            position="Software Engineer",
         )
 
         params = get_params(lead.id)
@@ -37,20 +39,20 @@ class TestUpdate(TestBase):
             json={
                 **{
                     **params,
-                    "start_at": start_at.isoformat(),
-                    "end_at": end_at.isoformat(),
+                    "start_at": start_at,
+                    "end_at": end_at,
                     "state": "onsite",
                 },
             },
         )
         assert response.status_code == 200
 
-
     def test_not_found(self):
         lead = LeadRepo.create(
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
+            position="Software Engineer",
         )
 
         params = get_params(lead.id)
@@ -60,8 +62,8 @@ class TestUpdate(TestBase):
             json={
                 **{
                     **params,
-                    "start_at": start_at.isoformat(),
-                    "end_at": end_at.isoformat(),
+                    "start_at": start_at,
+                    "end_at": end_at,
                     "state": "onsite",
                 },
             },
@@ -69,12 +71,12 @@ class TestUpdate(TestBase):
 
         assert response.status_code == 404
 
-
     def test_missing_params(self):
         lead = LeadRepo.create(
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
+            position="Software Engineer",
         )
 
         params = get_params(lead.id)
@@ -88,11 +90,12 @@ class TestUpdate(TestBase):
 
         assert response.status_code == 422
 
-    def test_invalid_start_at_param(self):
+    def test_create_success_no_dates_given(self):
         lead = LeadRepo.create(
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
+            position="Software Engineer",
         )
 
         params = get_params(lead.id)
@@ -103,12 +106,8 @@ class TestUpdate(TestBase):
             json={
                 **{
                     **params,
-                    "start_at": start_at.isoformat(),
-                    "end_at": end_at, # don't call isoformat() on this so that it fails
                     "state": "offer",
                 },
             },
         )
-
-        assert response.status_code == 422
-        assert "Invalid start_at or end_at datetime format" in response.get_json()["message"]
+        assert response.status_code == 200
