@@ -90,7 +90,7 @@ class TestUpdate(TestBase):
 
         assert response.status_code == 422
 
-    def test_create_success_no_dates_given(self):
+    def test_success_no_dates_given(self):
         lead = LeadRepo.create(
             company_name="Test",
             contacts="Elvyn M",
@@ -111,3 +111,28 @@ class TestUpdate(TestBase):
             },
         )
         assert response.status_code == 200
+
+    def test_success_invalid_end_at(self):
+        lead = LeadRepo.create(
+            company_name="Test",
+            contacts="Elvyn M",
+            description="Not gonna make it startup",
+            position="Software Engineer",
+        )
+
+        params = get_params(lead.id)
+        stage = StageRepo.create(**params)
+
+        response = self.client.patch(
+            "v1/stages/{}".format(stage.id),
+            json={
+                **{
+                    **params,
+                    "state": "offer",
+                    "end_at": datetime.utcnow().isoformat()
+                },
+            },
+        )
+
+        assert response.status_code == 422
+        assert "Invalid end_at datetime format" in response.get_json()["message"]

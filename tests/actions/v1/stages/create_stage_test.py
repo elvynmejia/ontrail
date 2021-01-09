@@ -92,3 +92,22 @@ class TestCreate(TestBase):
         assert response.get_json()[
             "message"
         ] == "Cannot find Lead by given lead_id {}".format(lead_id__does_not_exist)
+
+    def test_create_invalid_end_at(self):
+        lead_id_does_not_exist = 100
+        response = self.client.post(
+            "/v1/stages",
+            json={
+                "title": "Gloria <> Elvyn | Technical",
+                "links": "",
+                "description": "See how you go about solving a technical problem",
+                "notes": "",
+                "state": "phone_screen",
+                "start_at": datetime.utcnow().strftime(DATETIME_FORMAT),
+                "end_at": datetime.utcnow().isoformat(),
+                "lead_id": lead_id_does_not_exist,
+            },
+        )
+
+        assert response.status_code == 422
+        assert "Invalid end_at datetime format" in response.get_json()["message"]

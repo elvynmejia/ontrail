@@ -27,8 +27,11 @@ class Update(MethodView):
 
         json_data = request.get_json()
 
-        start_at = self.start_at()
-        end_at = self.end_at()
+        try:
+            start_at = self.start_at()
+            end_at = self.end_at()
+        except UnprocessableEntity as error:
+            return error.as_json(), error.http_code
 
         try:
             params = {
@@ -51,41 +54,40 @@ class Update(MethodView):
             return error.as_json(), error.http_code
 
     def start_at(self):
-        start_at = None
 
         json_data = request.get_json()
 
         if json_data.get("start_at"):
             try:
-                start_at = datetime.strptime(
+                parsed_start_at = datetime.strptime(
                     json_data.get("start_at"), DATETIME_FORMAT
-                ).strftime(DATETIME_FORMAT)
+                )
+
+                if parsed_start_at:
+                    return parsed_start_at.strftime(DATETIME_FORMAT)
+
             except (ValueError, TypeError):
-                error = UnprocessableEntity(
+                raise UnprocessableEntity(
                     message=datetime_validation_error_message.format(
                         "start_at", DATETIME_FORMAT, json_data.get("start_at")
                     )
                 )
-                return error.as_json(), error.http_code
-
-        return start_at
 
     def end_at(self):
         json_data = request.get_json()
 
-        end_at = None
-
         if json_data.get("end_at"):
             try:
-                end_at = datetime.strptime(
+                parsed_end_at = datetime.strptime(
                     json_data.get("end_at"), DATETIME_FORMAT
-                ).strftime(DATETIME_FORMAT)
+                )
+
+                if parsed_end_at:
+                    return parsed_end_at.strftime(DATETIME_FORMAT)
+
             except (ValueError, TypeError):
-                error = UnprocessableEntity(
-                    message=datetime_validation_error_message(
+                raise UnprocessableEntity(
+                    message=datetime_validation_error_message.format(
                         "end_at", DATETIME_FORMAT, json_data.get("end_at")
                     )
                 )
-                return error.as_json(), error.http_code
-
-        return end_at
