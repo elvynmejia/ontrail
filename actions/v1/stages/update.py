@@ -9,6 +9,10 @@ from entities import StageEntity
 from decorators import validate_id
 from constants import DATETIME_FORMAT
 
+datetime_validation_error_message = (
+    "Invalid {} datetime format." "Example datetime format allowed {}. Given {}"
+)
+
 
 class Update(MethodView):
 
@@ -23,19 +27,34 @@ class Update(MethodView):
 
         json_data = request.get_json()
 
-        try:
-            start_at = datetime.strptime(
-                json_data.get("start_at"), DATETIME_FORMAT
-            ).isoformat()
+        start_at = None
+        end_at = None
 
-            end_at = datetime.strptime(
-                json_data.get("end_at"), DATETIME_FORMAT
-            ).isoformat()
-        except (ValueError, TypeError):
-            error = UnprocessableEntity(
-                message="Invalid start_at or end_at datetime format. Example datetime format allowed: 2020-10-22T16:53:37.697725"
-            )
-            return error.as_json(), error.http_code
+        if json_data.get("start_at"):
+            try:
+                start_at = datetime.strptime(
+                    json_data.get("start_at"), DATETIME_FORMAT
+                ).strftime(DATETIME_FORMAT)
+            except (ValueError, TypeError):
+                error = UnprocessableEntity(
+                    message=datetime_validation_error_message.format(
+                        "start_at", DATETIME_FORMAT, json_data.get("start_at")
+                    )
+                )
+                return error.as_json(), error.http_code
+
+        if json_data.get("end_at"):
+            try:
+                end_at = datetime.strptime(
+                    json_data.get("end_at"), DATETIME_FORMAT
+                ).strftime(DATETIME_FORMAT)
+            except (ValueError, TypeError):
+                error = UnprocessableEntity(
+                    message=datetime_validation_error_message(
+                        "end_at", DATETIME_FORMAT, json_data.get("end_at")
+                    )
+                )
+                return error.as_json(), error.http_code
 
         try:
             params = {

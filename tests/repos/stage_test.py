@@ -10,6 +10,7 @@ class TestStageRepo(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
+            position="Jr Eng",
         )
 
         stage = StageRepo.create(
@@ -30,6 +31,7 @@ class TestStageRepo(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
+            position="Jr Eng",
         )
 
         stage = StageRepo.create(
@@ -51,6 +53,7 @@ class TestStageRepo(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
+            position="Jr Eng",
         )
 
         stage_1 = StageRepo.create(
@@ -75,6 +78,7 @@ class TestStageRepo(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
+            position="Jr Eng",
         )
 
         stage_1 = StageRepo.create(

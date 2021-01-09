@@ -8,24 +8,17 @@ from actions.error import UnprocessableEntity, NotFound
 from entities import StageEntity
 from constants import DATETIME_FORMAT
 
+datetime_validation_error_message = (
+    "Invalid {} datetime format." "Example datetime format allowed {}. Given {}"
+)
+
 
 class Create(MethodView):
     def post(self):
         json_data = request.get_json()
 
-        try:
-            start_at = datetime.strptime(
-                json_data.get("start_at"), DATETIME_FORMAT
-            ).isoformat()
-
-            end_at = datetime.strptime(
-                json_data.get("end_at"), DATETIME_FORMAT
-            ).isoformat()
-        except (ValueError, TypeError):
-            error = UnprocessableEntity(
-                message="Invalid start_at or end_at datetime format. Example datetime format allowed: 2020-10-22T16:53:37.697725"
-            )
-            return error.as_json(), error.http_code
+        start_at = self.start_at()
+        end_at = self.end_at()
 
         try:
             params = {
@@ -56,3 +49,43 @@ class Create(MethodView):
 
         stage = StageRepo.create(**{**data, "lead_id": lead.id})
         return {"stage": stage.as_json()}, 201
+
+    def start_at(self):
+        start_at = None
+
+        json_data = request.get_json()
+
+        if json_data.get("start_at"):
+            try:
+                start_at = datetime.strptime(
+                    json_data.get("start_at"), DATETIME_FORMAT
+                ).strftime(DATETIME_FORMAT)
+            except (ValueError, TypeError):
+                error = UnprocessableEntity(
+                    message=datetime_validation_error_message.format(
+                        "start_at", DATETIME_FORMAT, json_data.get("start_at")
+                    )
+                )
+                return error.as_json(), error.http_code
+
+        return start_at
+
+    def end_at(self):
+        json_data = request.get_json()
+
+        end_at = None
+
+        if json_data.get("end_at"):
+            try:
+                end_at = datetime.strptime(
+                    json_data.get("end_at"), DATETIME_FORMAT
+                ).strftime(DATETIME_FORMAT)
+            except (ValueError, TypeError):
+                error = UnprocessableEntity(
+                    message=datetime_validation_error_message(
+                        "end_at", DATETIME_FORMAT, json_data.get("end_at")
+                    )
+                )
+                return error.as_json(), error.http_code
+
+        return end_at

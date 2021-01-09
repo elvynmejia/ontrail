@@ -8,7 +8,7 @@ class TestUpdate(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer"
+            position="Software Engineer",
         )
 
         response = self.client.patch(
@@ -17,7 +17,7 @@ class TestUpdate(TestBase):
                 "company_name": "a new company",
                 "contacts": lead.contacts,
                 "status": lead.status,
-                "position": "Software Engineer"
+                "position": "Software Engineer",
             },
         )
 
@@ -28,7 +28,7 @@ class TestUpdate(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer"
+            position="Software Engineer",
         )
 
         response = self.client.patch(
@@ -37,7 +37,7 @@ class TestUpdate(TestBase):
                 "company_name": "a new company",
                 "contacts": lead.contacts,
                 "status": lead.status,
-                "position": "Software Engineer"
+                "position": "Software Engineer",
             },
         )
 
@@ -48,7 +48,7 @@ class TestUpdate(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer"
+            position="Software Engineer",
         )
 
         response = self.client.patch(
