@@ -26,6 +26,11 @@ class Lead(db.Model):
 
     reference = db.Column(db.String(100), nullable=True)
 
+    current_stage_id = db.Column(
+        db.Integer,
+        nullable=True,
+    )
+
     # relationships
     # stages = db.relationship("Stage", backref="lead", lazy="dynamic")
 
