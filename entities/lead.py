@@ -14,6 +14,7 @@ class LeadEntity(Schema):
     )
 
     reference = fields.Str(required=False)
+    current_stage_id = fields.Int(required=False)
 
     leads = fields.List(fields.Nested(lambda: "StageEntity"), dump_only=True)
 

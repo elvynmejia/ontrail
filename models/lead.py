@@ -49,7 +49,7 @@ class Lead(db.Model):
     def __repr__(self):
         return (
             "Lead(id = {}, company_name = {}, position = {} contacts = {}, description = {} "
-            "status = {}, created_at = {}, updated_at = {})"
+            "status = {}, reference = {}, current_stage_id = {}, created_at = {}, updated_at = {})"
             "".format(
                 repr(self.id),
                 repr(self.company_name),
@@ -58,6 +58,7 @@ class Lead(db.Model):
                 repr(self.description),
                 repr(self.status),
                 repr(self.reference),
+                repr(self.current_stage_id),
                 repr(self.created_at),
                 repr(self.updated_at),
             )

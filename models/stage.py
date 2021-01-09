@@ -57,7 +57,7 @@ class Stage(db.Model):
         return (
             "Stage(id = {}, title = {}, links = {} "
             "description = {}, notes = {}, lead_id = {} "
-            "state = {}, created_at = {}, updated_at = {})"
+            "state = {}, reference = {}, created_at = {}, updated_at = {})"
             "".format(
                 repr(self.id),
                 repr(self.title),
