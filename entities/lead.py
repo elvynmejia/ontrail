@@ -20,6 +20,3 @@ class LeadEntity(Schema):
 
     created_at = fields.DateTime(dump_only=True, format=DATETIME_FORMAT)
     updated_at = fields.DateTime(dump_only=True, format=DATETIME_FORMAT)
-
-    # def as_json(self, record):
-    #     return self.dump(record)
