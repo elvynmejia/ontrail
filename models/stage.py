@@ -4,6 +4,7 @@ from db_config import db
 from constants import STATES
 from entities import StageEntity
 from models.lead import Lead
+from .util import generate_public_id
 
 
 class Stage(db.Model):
@@ -12,6 +13,13 @@ class Stage(db.Model):
         db.Integer,
         primary_key=True,
         nullable=False,
+    )
+
+    public_id = db.Column(
+        db.String(32),
+        nullable=True,
+        default=lambda context: generate_public_id(context, Stage),
+        unique=True,
     )
 
     title = db.Column(
@@ -55,11 +63,12 @@ class Stage(db.Model):
 
     def __repr__(self):
         return (
-            "Stage(id = {}, title = {}, links = {} "
+            "Stage(id = {}, public_id = {} title = {}, links = {} "
             "description = {}, notes = {}, lead_id = {} "
             "state = {}, reference = {}, created_at = {}, updated_at = {})"
             "".format(
                 repr(self.id),
+                repr(self.public_id),
                 repr(self.title),
                 repr(self.links),
                 repr(self.description),
