@@ -6,4 +6,4 @@ from repos import LeadRepo
 
 class TestUtil(TestBase):
     def test_generate_public_id(self):
-        assert "lead_" in generate_public_id(Lead, Lead)
+        assert "lead_" in generate_public_id(Lead, Lead, "lead")
