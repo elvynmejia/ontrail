@@ -15,7 +15,7 @@ class BaseConfig:
     TESTING = False
     FLASK_ENV = "production"
     SQLALCHEMY_DATABASE_URI = environ.get("DATABASE_URL")
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    # SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 class Dev(BaseConfig):
