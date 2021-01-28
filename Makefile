@@ -23,7 +23,8 @@ test-db:
 	mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS ontrail_test;"
 
 .PHONY: seed
-seed: dev-db
+seed:
+	venv/bin/flask db upgrade
 	venv/bin/flask seed create
 
 .PHONY: clean
