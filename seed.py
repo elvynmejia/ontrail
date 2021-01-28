@@ -5,10 +5,15 @@ from repos import LeadRepo, StageRepo
 
 seed_bp = Blueprint("seed", __name__)
 
+
 @seed_bp.cli.command("create")
 def create():
-    db.create_all()
-    lead = LeadRepo.create(company_name="Gem",contacts="Elvyn M",description="Not gonna make it startup",position="Sr Backend Engineer")
+    lead = LeadRepo.create(
+        company_name="Gem",
+        contacts="Elvyn M",
+        description="Not gonna make it startup",
+        position="Sr Backend Engineer"
+    )
 
     StageRepo.create(
         title="Gloria <> Elvyn | Technical",
