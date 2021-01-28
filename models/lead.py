@@ -2,7 +2,6 @@ from datetime import datetime
 from entities.lead import LeadEntity
 from db_config import db
 from constants import STATES
-from .util import generate_public_id
 
 
 class Lead(db.Model):
@@ -11,13 +10,6 @@ class Lead(db.Model):
         db.Integer,
         primary_key=True,
         nullable=False,
-    )
-
-    public_id = db.Column(
-        db.String(32),
-        nullable=True,
-        default=lambda context: generate_public_id(context, Lead),
-        unique=True,
     )
 
     company_name = db.Column(db.String(100), nullable=False)
@@ -56,11 +48,10 @@ class Lead(db.Model):
 
     def __repr__(self):
         return (
-            "Lead(id = {}, public_id = {}, company_name = {}, position = {} contacts = {}, description = {} "
+            "Lead(id = {}, company_name = {}, position = {} contacts = {}, description = {} "
             "status = {}, reference = {}, current_stage_id = {}, created_at = {}, updated_at = {})"
             "".format(
                 repr(self.id),
-                repr(self.public_id),
                 repr(self.company_name),
                 repr(self.position),
                 repr(self.contacts),
