@@ -5,6 +5,7 @@ from constants import DATETIME_FORMAT
 
 class StageEntity(Schema):
     id = fields.Int(dump_only=True)
+    public_id = fields.Str(dump_only=True)
     title = fields.Str(required=True)
     links = fields.Str()
     description = fields.Str()

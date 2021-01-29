@@ -5,8 +5,9 @@ from constants import DATETIME_FORMAT
 
 class LeadEntity(Schema):
     id = fields.Int(dump_only=True)
+    public_id = fields.Str(dump_only=True)
     company_name = fields.Str(required=True)
-    position = fields.Str(required=True)
+    role = fields.Str(required=True)
     contacts = fields.Str(required=True)
     description = fields.Str(allow_none=True)
     status = fields.Str(

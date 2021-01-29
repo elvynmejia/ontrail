@@ -15,7 +15,7 @@ class BaseConfig:
     TESTING = False
     FLASK_ENV = "production"
     SQLALCHEMY_DATABASE_URI = environ.get("DATABASE_URL")
-    # SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class Dev(BaseConfig):
@@ -26,6 +26,7 @@ class Dev(BaseConfig):
     SQLALCHEMY_DATABASE_URI = (
         "mysql+pymysql" + "://root:root@localhost:3306/ontrail_dev"
     )
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 class Test(BaseConfig):

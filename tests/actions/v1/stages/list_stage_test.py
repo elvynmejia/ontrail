@@ -10,7 +10,7 @@ class TestList(TestBase):
             company_name="Gem",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         for x in range(3):
@@ -36,14 +36,14 @@ class TestList(TestBase):
             company_name="Gem",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         lead_2 = LeadRepo.create(
             company_name="Gem",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         for x in range(5):

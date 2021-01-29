@@ -9,7 +9,7 @@ class TestShow(TestBase):
             company_name="Gem",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         stage = StageRepo.create(
@@ -43,7 +43,7 @@ class TestShow(TestBase):
             company_name="Gem",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         stage = StageRepo.create(

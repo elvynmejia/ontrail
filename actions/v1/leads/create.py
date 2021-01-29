@@ -13,7 +13,7 @@ class Create(MethodView):
         try:
             params = {
                 "company_name": json_data.get("company_name"),
-                "position": json_data.get("position"),
+                "role": json_data.get("role"),
                 "contacts": json_data.get("contacts"),
                 "description": json_data.get("description"),
                 "status": json_data.get("status"),

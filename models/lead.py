@@ -22,7 +22,7 @@ class Lead(db.Model):
 
     company_name = db.Column(db.String(100), nullable=False)
 
-    position = db.Column(db.String(100), nullable=False)
+    role = db.Column(db.String(100), nullable=False)
 
     contacts = db.Column(db.String(100), nullable=False)
 
@@ -56,13 +56,13 @@ class Lead(db.Model):
 
     def __repr__(self):
         return (
-            "Lead(id = {}, public_id = {}, company_name = {}, position = {} contacts = {}, description = {} "
+            "Lead(id = {}, public_id = {}, company_name = {}, role = {} contacts = {}, description = {} "
             "status = {}, reference = {}, current_stage_id = {}, created_at = {}, updated_at = {})"
             "".format(
                 repr(self.id),
                 repr(self.public_id),
                 repr(self.company_name),
-                repr(self.position),
+                repr(self.role),
                 repr(self.contacts),
                 repr(self.description),
                 repr(self.status),

@@ -8,9 +8,8 @@ class TestCreate(TestBase):
             "/v1/leads",
             json={
                 "company_name": "Gem",
-                "position": "Senior Fullstack Engineer",
                 "contacts": "Gloria",
-                "position": "Software Engineer",
+                "role": "Software Engineer",
             },
         )
 
@@ -21,9 +20,8 @@ class TestCreate(TestBase):
         response = self.client.post(
             "/v1/leads",
             json={
-                "position": "Senior Fullstack Engineer",
+                "role": "Senior Fullstack Engineer",
                 "contacts": "Gloria",
-                "position": "Software Engineer",
             },
         )
         assert response.status_code == 422

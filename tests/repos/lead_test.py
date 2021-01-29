@@ -8,7 +8,7 @@ class TestLeadRepo(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         assert lead.company_name == "Test"
@@ -20,7 +20,7 @@ class TestLeadRepo(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         lead = LeadRepo.find(id=lead_1.id)
@@ -37,7 +37,7 @@ class TestLeadRepo(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
         updated_lead = LeadRepo.update(id=lead.id, company_name="changed")
         assert updated_lead.company_name == "changed"

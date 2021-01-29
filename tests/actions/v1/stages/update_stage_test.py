@@ -27,7 +27,7 @@ class TestUpdate(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         params = get_params(lead.id)
@@ -52,7 +52,7 @@ class TestUpdate(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         params = get_params(lead.id)
@@ -76,7 +76,7 @@ class TestUpdate(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         params = get_params(lead.id)
@@ -95,7 +95,7 @@ class TestUpdate(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         params = get_params(lead.id)
@@ -117,7 +117,7 @@ class TestUpdate(TestBase):
             company_name="Test",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         params = get_params(lead.id)

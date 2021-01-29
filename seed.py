@@ -12,7 +12,7 @@ def create():
         company_name="Gem",
         contacts="Elvyn M",
         description="Not gonna make it startup",
-        position="Sr Backend Engineer"
+        role="Sr Backend Engineer"
     )
 
     StageRepo.create(
@@ -30,7 +30,7 @@ def create():
         company_name="Gem",
         contacts="Elvyn M",
         description="Not gonna make it startup",
-        position="Software Engineer"
+        role="Software Engineer"
     )
 
     for x in range(5):

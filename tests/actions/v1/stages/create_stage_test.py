@@ -10,7 +10,7 @@ class TestCreate(TestBase):
             company_name="Gem",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         response = self.client.post(
@@ -35,7 +35,7 @@ class TestCreate(TestBase):
             company_name="Gem",
             contacts="Elvyn M",
             description="Not gonna make it startup",
-            position="Software Engineer",
+            role="Software Engineer",
         )
 
         response = self.client.post(
