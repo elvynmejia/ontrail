@@ -12,7 +12,8 @@ def create():
         company_name="Gem",
         contacts="Elvyn M",
         description="Not gonna make it startup",
-        role="Sr Backend Engineer"
+        role="Sr Backend Engineer",
+        current_stage_id=101,
     )
 
     StageRepo.create(

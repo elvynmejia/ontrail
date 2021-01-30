@@ -10,9 +10,11 @@ class TestList(TestBase):
                 contacts="Elvyn M",
                 description="Not gonna make it startup #{}".format(x),
                 role="Software Engineer",
+                current_stage_id=100,
             )
         response = self.client.get("/v1/leads")
 
         assert response.status_code == 200
         assert response.get_json()["leads"][0]["id"] == 3
+        assert response.get_json()["leads"][0]["current_stage_id"] == 100
         assert len(response.get_json()["leads"]) == 3
