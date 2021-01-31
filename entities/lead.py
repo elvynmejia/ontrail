@@ -1,9 +1,10 @@
 from marshmallow import Schema, fields, validate, post_dump
+from .base import BaseEntity
 from constants import STATES
 from constants import DATETIME_FORMAT
 
 
-class LeadEntity(Schema):
+class LeadEntity(BaseEntity):
     __envelope__ = {
         "single": "lead",
         "many": "leads",
@@ -66,15 +67,3 @@ class LeadEntity(Schema):
                 **default_data,
                 "id": data["public_id"],
             }
-
-    @classmethod
-    def as_json(self, data, internal=False):
-
-        self.__internal__ = internal
-
-        if isinstance(data, list):
-            key = self.__envelope__["many"]
-            return {key: list(map(lambda entry: self().dump(entry), data))}
-        else:
-            key = self.__envelope__["single"]
-            return {key: self().dump(data)}

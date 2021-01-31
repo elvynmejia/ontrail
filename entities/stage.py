@@ -1,9 +1,9 @@
-from marshmallow import Schema, fields, validate, post_dump
+from marshmallow import fields, validate, post_dump
+from .base import BaseEntity
 from constants import STATES
 from constants import DATETIME_FORMAT
 
-
-class StageEntity(Schema):
+class StageEntity(BaseEntity):
     __envelope__ = {
         "single": "stage",
         "many": "stages",
@@ -56,15 +56,3 @@ class StageEntity(Schema):
                 "id": data["public_id"],
                 "lead_id": LeadRepo.find(id=data["lead_id"]).public_id,
             }
-
-    @classmethod
-    def as_json(self, data, internal=False):
-
-        self.__internal__ = internal
-
-        if isinstance(data, list):
-            key = self.__envelope__["many"]
-            return {key: list(map(lambda entry: self().dump(entry), data))}
-        else:
-            key = self.__envelope__["single"]
-            return {key: self().dump(data)}
