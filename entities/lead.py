@@ -45,12 +45,12 @@ class LeadEntity(Schema):
         }
 
         if self.__internal__:
-            return default_data
+            return {**default_data, "public_id": data["public_id"]}
         else:
-            current_stage_id_to_public_id = None
-
             if data["current_stage_id"]:
-                from repos.stage import StageRepo # to avoid circular deps error for now
+                from repos.stage import (
+                    StageRepo,
+                )  # to avoid circular deps error for now
 
                 current_stage_id_to_public_id = StageRepo.find(
                     id=data["current_stage_id"]
@@ -62,6 +62,11 @@ class LeadEntity(Schema):
                     "current_stage_id": current_stage_id_to_public_id.public_id,
                 }
 
+            return {
+                **default_data,
+                "id": data["public_id"],
+            }
+
     @classmethod
     def as_json(self, data, internal=False):
 
@@ -69,13 +74,7 @@ class LeadEntity(Schema):
 
         if isinstance(data, list):
             key = self.__envelope__["many"]
-            return {
-                key: list(
-                    map(
-                        lambda entry: self().dump(entry), data
-                    )
-                )
-            }
+            return {key: list(map(lambda entry: self().dump(entry), data))}
         else:
             key = self.__envelope__["single"]
             return {key: self().dump(data)}

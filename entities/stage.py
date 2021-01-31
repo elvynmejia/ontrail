@@ -1,9 +1,16 @@
-from marshmallow import Schema, fields, validate
+from marshmallow import Schema, fields, validate, post_dump
 from constants import STATES
 from constants import DATETIME_FORMAT
 
 
 class StageEntity(Schema):
+    __envelope__ = {
+        "single": "stage",
+        "many": "stages",
+    }
+
+    __internal__ = False
+
     id = fields.Int(dump_only=True)
     public_id = fields.Str(dump_only=True)
     title = fields.Str(required=True)
@@ -18,3 +25,46 @@ class StageEntity(Schema):
     end_at = fields.DateTime(required=False, allow_none=True, format=DATETIME_FORMAT)
     created_at = fields.DateTime(dump_only=True, format=DATETIME_FORMAT)
     updated_at = fields.DateTime(dump_only=True, format=DATETIME_FORMAT)
+
+    @post_dump
+    def post_dump_rocess(self, data, many, **kwargs):
+        default_data = {
+            "id": data["id"],
+            "title": data["title"],
+            "links": data["links"],
+            "description": data["description"],
+            "notes": data["notes"],
+            "lead_id": data["lead_id"],
+            "state": data["state"],
+            "reference": data["reference"],
+            "start_at": data["start_at"],
+            "end_at": data["end_at"],
+            "created_at": data["created_at"],
+            "updated_at": data["updated_at"],
+        }
+
+        if self.__internal__:
+            return {**default_data, "public_id": data["public_id"]}
+        else:
+
+            from repos import (
+                LeadRepo,
+            )  # to avoid circular deps error for now
+
+            return {
+                **default_data,
+                "id": data["public_id"],
+                "lead_id": LeadRepo.find(id=data["lead_id"]).public_id,
+            }
+
+    @classmethod
+    def as_json(self, data, internal=False):
+
+        self.__internal__ = internal
+
+        if isinstance(data, list):
+            key = self.__envelope__["many"]
+            return {key: list(map(lambda entry: self().dump(entry), data))}
+        else:
+            key = self.__envelope__["single"]
+            return {key: self().dump(data)}
