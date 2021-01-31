@@ -10,5 +10,5 @@ class List(MethodView):
         page = 1
         per_page = 10
         result, total = LeadRepo.paginate(page, per_page)
-        leads = list(map(lambda lead: lead.as_json(), result))
-        return ({"leads": leads}, 200)
+        data = LeadEntity.as_json(result)
+        return (data, 200)
