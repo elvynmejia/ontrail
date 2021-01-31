@@ -28,7 +28,7 @@ class TestCreate(TestBase):
         )
 
         assert response.status_code == 201
-        assert response.get_json()["stage"]["lead_id"] == lead.id
+        assert response.get_json()["stage"]["lead_id"] == lead.public_id
 
     def test_create_success_no_dates_given(self):
         lead = LeadRepo.create(
@@ -51,7 +51,7 @@ class TestCreate(TestBase):
         )
 
         assert response.status_code == 201
-        assert response.get_json()["stage"]["lead_id"] == lead.id
+        assert response.get_json()["stage"]["lead_id"] == lead.public_id
 
     def test_create_missing_lead_id(self):
         response = self.client.post(

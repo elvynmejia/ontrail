@@ -28,8 +28,8 @@ class TestShow(TestBase):
         )
 
         assert response.status_code == 200
-        assert response.get_json()["stage"]["id"] == stage.id
-        assert response.get_json()["stage"]["lead_id"] == lead.id
+        assert response.get_json()["stage"]["id"] == stage.public_id
+        assert response.get_json()["stage"]["lead_id"] == lead.public_id
 
     def test_not_found(self):
         response = self.client.get(

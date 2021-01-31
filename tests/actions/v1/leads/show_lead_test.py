@@ -16,7 +16,7 @@ class TestShow(TestBase):
         )
 
         assert response.status_code == 200
-        assert response.get_json()["lead"]["id"] == lead.id
+        assert response.get_json()["lead"]["id"] == lead.public_id
 
     def test_not_found(self):
         lead = LeadRepo.create(
