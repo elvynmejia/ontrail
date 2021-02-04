@@ -24,7 +24,7 @@ class TestShow(TestBase):
         )
 
         response = self.client.get(
-            "v1/stages/{}".format(stage.id),
+            "v1/stages/{}".format(stage.public_id),
         )
 
         assert response.status_code == 200
@@ -33,7 +33,7 @@ class TestShow(TestBase):
 
     def test_not_found(self):
         response = self.client.get(
-            "v1/stages/{}".format(100),
+            "v1/stages/{}".format("stage_100"),
         )
 
         assert response.status_code == 404
@@ -62,4 +62,4 @@ class TestShow(TestBase):
         )
 
         assert response.status_code == 422
-        assert response.get_json()["message"] == "Missing required id"
+        assert response.get_json()["message"] == "Missing or invalid required id"

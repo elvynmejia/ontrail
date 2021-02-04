@@ -18,6 +18,10 @@ class Create(MethodView):
         json_data = request.get_json()
 
         try:
+            lead = self.lead()
+        except (UnprocessableEntity, NotFound) as error:
+            return error.as_json(), error.http_code
+        try:
             start_at = self.start_at()
             end_at = self.end_at()
         except UnprocessableEntity as error:
@@ -29,7 +33,7 @@ class Create(MethodView):
                 "links": json_data.get("links"),
                 "description": json_data.get("description"),
                 "notes": json_data.get("notes"),
-                "lead_id": json_data.get("lead_id"),
+                "lead_id": lead.id,
                 "state": json_data.get("state"),
                 "start_at": start_at,
                 "end_at": end_at,
@@ -42,16 +46,21 @@ class Create(MethodView):
             error = UnprocessableEntity(errors=[err.messages])
             return error.as_json(), error.http_code
 
-        try:
-            lead = LeadRepo.find(id=params["lead_id"])
-        except RecordNotFound as err:
-            error = NotFound(
-                message="Cannot find Lead by given lead_id {}".format(params["lead_id"])
-            )
-            return error.as_json(), error.http_code
-
         stage = StageRepo.create(**{**data, "lead_id": lead.id})
         return {"stage": stage.as_json()}, 201
+
+    def lead(self):
+        try:
+            lead_id = request.get_json()["lead_id"]
+        except KeyError:
+            raise UnprocessableEntity(errors=[{"lead_id": ["Field may not be null."]}])
+
+        try:
+            return LeadRepo.find(public_id=lead_id)
+        except (RecordNotFound, KeyError) as err:
+            raise NotFound(
+                message="Cannot find Lead by given lead_id {}".format(lead_id)
+            )
 
     def start_at(self):
 

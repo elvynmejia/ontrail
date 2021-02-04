@@ -28,7 +28,10 @@ class TestList(TestBase):
         response = self.client.get("/v1/stages")
 
         assert response.status_code == 200
-        assert response.get_json()["stages"][0]["id"] == StageRepo.find(id=stage.id).public_id
+        assert (
+            response.get_json()["stages"][0]["id"]
+            == StageRepo.find(id=stage.id).public_id
+        )
         assert len(response.get_json()["stages"]) == 3
 
     def test_list_by_lead_id_success(self):
@@ -76,7 +79,9 @@ class TestList(TestBase):
                 },
             )
 
-        response = self.client.get("/v1/stages", query_string={"lead_id": lead_1.id})
+        response = self.client.get(
+            "/v1/stages", query_string={"lead_id": lead_1.public_id}
+        )
 
         assert response.status_code == 200
         stages = response.get_json()["stages"]

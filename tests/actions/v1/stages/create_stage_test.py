@@ -20,7 +20,7 @@ class TestCreate(TestBase):
                 "links": "",
                 "description": "See how you go about solving a technical problem",
                 "notes": "",
-                "lead_id": lead.id,
+                "lead_id": lead.public_id,
                 "state": "phone_screen",
                 "start_at": datetime.utcnow().strftime(DATETIME_FORMAT),
                 "end_at": datetime.utcnow().strftime(DATETIME_FORMAT),
@@ -45,7 +45,7 @@ class TestCreate(TestBase):
                 "links": "",
                 "description": "See how you go about solving a technical problem",
                 "notes": "",
-                "lead_id": lead.id,
+                "lead_id": lead.public_id,
                 "state": "phone_screen",
             },
         )
@@ -94,7 +94,13 @@ class TestCreate(TestBase):
         ] == "Cannot find Lead by given lead_id {}".format(lead_id__does_not_exist)
 
     def test_create_invalid_end_at(self):
-        lead_id_does_not_exist = 100
+        lead = LeadRepo.create(
+            company_name="Gem",
+            contacts="Elvyn M",
+            description="Not gonna make it startup",
+            role="Software Engineer",
+        )
+
         response = self.client.post(
             "/v1/stages",
             json={
@@ -105,7 +111,7 @@ class TestCreate(TestBase):
                 "state": "phone_screen",
                 "start_at": datetime.utcnow().strftime(DATETIME_FORMAT),
                 "end_at": datetime.utcnow().isoformat(),
-                "lead_id": lead_id_does_not_exist,
+                "lead_id": lead.public_id,
             },
         )
 

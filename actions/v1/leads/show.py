@@ -6,16 +6,16 @@ from repos import LeadRepo
 from entities import LeadEntity
 from repos.error import RecordNotFound
 from actions.error import NotFound
-from decorators import validate_id
+from decorators import validate_public_id
 
 
 class Show(MethodView):
 
-    decorators = [validate_id]
+    decorators = [validate_public_id]
 
     def get(self, id):
         try:
-            lead = LeadRepo.find(id=id)
+            lead = LeadRepo.find(public_id=id)
             return ({"lead": lead.as_json()}, 200)
         except RecordNotFound as err:
             error = NotFound(message="Lead with id {} not found".format(id))

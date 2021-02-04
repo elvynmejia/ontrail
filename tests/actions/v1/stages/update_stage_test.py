@@ -35,17 +35,20 @@ class TestUpdate(TestBase):
         stage = StageRepo.create(**params)
 
         response = self.client.patch(
-            "v1/stages/{}".format(stage.id),
+            "v1/stages/{}".format(stage.public_id),
             json={
                 **{
                     **params,
                     "start_at": start_at,
                     "end_at": end_at,
                     "state": "onsite",
+                    "lead_id": lead.public_id,
                 },
             },
         )
+
         assert response.status_code == 200
+
 
     def test_not_found(self):
         lead = LeadRepo.create(
@@ -58,13 +61,14 @@ class TestUpdate(TestBase):
         params = get_params(lead.id)
 
         response = self.client.patch(
-            "v1/stages/{}".format(100),
+            "v1/stages/{}".format("lead_100"),
             json={
                 **{
                     **params,
                     "start_at": start_at,
                     "end_at": end_at,
                     "state": "onsite",
+                    "lead_id": lead.public_id
                 },
             },
         )
@@ -84,8 +88,8 @@ class TestUpdate(TestBase):
         stage = StageRepo.create(**params)
 
         response = self.client.patch(
-            "v1/stages/{}".format(stage.id),
-            json={"title": "missing other params"},
+            "v1/stages/{}".format(stage.public_id),
+            json={"title": "missing other params", "lead_id": lead.public_id},
         )
 
         assert response.status_code == 422
@@ -102,11 +106,12 @@ class TestUpdate(TestBase):
         stage = StageRepo.create(**params)
 
         response = self.client.patch(
-            "v1/stages/{}".format(stage.id),
+            "v1/stages/{}".format(stage.public_id),
             json={
                 **{
                     **params,
                     "state": "offer",
+                    "lead_id": lead.public_id
                 },
             },
         )
@@ -124,12 +129,13 @@ class TestUpdate(TestBase):
         stage = StageRepo.create(**params)
 
         response = self.client.patch(
-            "v1/stages/{}".format(stage.id),
+            "v1/stages/{}".format(stage.public_id),
             json={
                 **{
                     **params,
                     "state": "offer",
-                    "end_at": datetime.utcnow().isoformat()
+                    "end_at": datetime.utcnow().isoformat(),
+                    "lead_id": lead.public_id,
                 },
             },
         )

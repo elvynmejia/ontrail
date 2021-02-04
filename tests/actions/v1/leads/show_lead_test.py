@@ -12,7 +12,7 @@ class TestShow(TestBase):
         )
 
         response = self.client.get(
-            "v1/leads/{}".format(lead.id),
+            "v1/leads/{}".format(lead.public_id),
         )
 
         assert response.status_code == 200
@@ -27,7 +27,7 @@ class TestShow(TestBase):
         )
 
         response = self.client.get(
-            "v1/leads/{}".format(100),
+            "v1/leads/{}".format("lead_100"),
         )
 
         assert response.status_code == 404
@@ -45,4 +45,4 @@ class TestShow(TestBase):
         )
 
         assert response.status_code == 422
-        assert response.get_json()["message"] == "Missing required id"
+        assert response.get_json()["message"] == "Missing or invalid required id"

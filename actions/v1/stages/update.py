@@ -2,11 +2,11 @@ from flask.views import MethodView, request
 from marshmallow import ValidationError
 from datetime import datetime
 
-from repos import StageRepo
+from repos import StageRepo, LeadRepo
 from repos.error import RecordNotFound
 from actions.error import NotFound, UnprocessableEntity
 from entities import StageEntity
-from decorators import validate_id
+from decorators import validate_public_id
 from constants import DATETIME_FORMAT
 
 datetime_validation_error_message = (
@@ -16,16 +16,23 @@ datetime_validation_error_message = (
 
 class Update(MethodView):
 
-    decorators = [validate_id]
+    decorators = [validate_public_id]
 
     def patch(self, id):
+        json_data = request.get_json()
+
         try:
-            stage = StageRepo.find(id=id)
+            stage = StageRepo.find(public_id=id)
         except RecordNotFound:
             error = NotFound(message="Stage with id {} not found".format(id))
             return error.as_json(), error.http_code
 
-        json_data = request.get_json()
+        try:
+            lead_id = json_data.get("lead_id")
+            lead = LeadRepo.find(public_id=lead_id)
+        except RecordNotFound:
+            error = NotFound(message="Cannot find lead by given lead_id".format(lead_id))
+            return error.as_json(), error.http_code
 
         try:
             start_at = self.start_at()
@@ -39,7 +46,7 @@ class Update(MethodView):
                 "links": json_data.get("links"),
                 "description": json_data.get("description"),
                 "notes": json_data.get("notes"),
-                "lead_id": json_data.get("lead_id"),
+                "lead_id": lead.id,
                 "state": json_data.get("state"),
                 "start_at": start_at,
                 "end_at": end_at,
@@ -47,7 +54,7 @@ class Update(MethodView):
 
             data = StageEntity().load(params)
 
-            updated_stage = StageRepo.update(id=id, **data)
+            updated_stage = StageRepo.update(id=stage.id, **data)
             return ({"stage": updated_stage.as_json()}, 200)
         except ValidationError as err:
             error = UnprocessableEntity(errors=[err.messages])

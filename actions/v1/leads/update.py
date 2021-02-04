@@ -5,16 +5,16 @@ from repos import LeadRepo
 from repos.error import RecordNotFound
 from entities import LeadEntity
 from actions.error import NotFound, UnprocessableEntity
-from decorators import validate_id
+from decorators import validate_public_id
 
 
 class Update(MethodView):
 
-    decorators = [validate_id]
+    decorators = [validate_public_id]
 
     def patch(self, id):
         try:
-            lead = LeadRepo.find(id=id)
+            lead = LeadRepo.find(public_id=id)
         except RecordNotFound as err:
             error = NotFound(message="Lead with id {} not found".format(id))
             return (error.as_json(), error.http_code)

@@ -12,7 +12,7 @@ class TestUpdate(TestBase):
         )
 
         response = self.client.patch(
-            "v1/leads/{}".format(lead.id),
+            "v1/leads/{}".format(lead.public_id),
             json={
                 "company_name": "a new company",
                 "contacts": lead.contacts,
@@ -32,7 +32,7 @@ class TestUpdate(TestBase):
         )
 
         response = self.client.patch(
-            "v1/leads/{}".format(100),
+            "v1/leads/{}".format("lead_100"),
             json={
                 "company_name": "a new company",
                 "contacts": lead.contacts,
