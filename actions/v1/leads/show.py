@@ -16,7 +16,7 @@ class Show(MethodView):
     def get(self, id):
         try:
             lead = LeadRepo.find(public_id=id)
-            return ({"lead": lead.as_json()}, 200)
+            return (LeadEntity.as_json(lead), 200)
         except RecordNotFound as err:
             error = NotFound(message="Lead with id {} not found".format(id))
             return (error.as_json(), error.http_code)

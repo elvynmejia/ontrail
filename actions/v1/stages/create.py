@@ -47,7 +47,7 @@ class Create(MethodView):
             return error.as_json(), error.http_code
 
         stage = StageRepo.create(**{**data, "lead_id": lead.id})
-        return {"stage": stage.as_json()}, 201
+        return(StageEntity.as_json(stage), 201)
 
     def lead(self):
         try:

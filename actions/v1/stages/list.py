@@ -25,5 +25,5 @@ class List(MethodView):
 
         # find a way to call as_json automatically before the response
         # is returrned to the client
-        stages = list(map(lambda stage: stage.as_json(), result))
-        return ({"stages": stages}, 200)
+        # stages = list(map(lambda stage: stage.as_json(), result))
+        return (StageEntity.as_json(result), 200)

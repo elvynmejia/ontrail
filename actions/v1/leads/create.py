@@ -23,7 +23,7 @@ class Create(MethodView):
             data = LeadEntity().load(params)
 
             lead = LeadRepo.create(**data)
-            return ({"lead": lead.as_json()}, 201)
+            return (LeadEntity.as_json(lead), 201)
         except ValidationError as err:
             # this should be abstracted to an error handler
             error = UnprocessableEntity(errors=[err.messages])

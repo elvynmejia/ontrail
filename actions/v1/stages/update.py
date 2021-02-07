@@ -57,7 +57,7 @@ class Update(MethodView):
             data = StageEntity().load(params)
 
             updated_stage = StageRepo.update(id=stage.id, **data)
-            return ({"stage": updated_stage.as_json()}, 200)
+            return (StageEntity.as_json(updated_stage), 200)
         except ValidationError as err:
             error = UnprocessableEntity(errors=[err.messages])
             return error.as_json(), error.http_code

@@ -15,7 +15,7 @@ class Show(MethodView):
     def get(self, id):
         try:
             stage = StageRepo.find(public_id=id)
-            return ({"stage": stage.as_json()}, 200)
+            return (StageEntity.as_json(stage), 200)
         except RecordNotFound:
             error = NotFound(message="Stage with id {} not found".format(id))
             return (error.as_json(), error.http_code)
