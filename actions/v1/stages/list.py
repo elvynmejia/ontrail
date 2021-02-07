@@ -16,7 +16,9 @@ class List(MethodView):
                 lead = LeadRepo.find(public_id=lead_id)
                 result, total = StageRepo.paginate(**{"lead_id": lead.id})
             except RecordNotFound:
-                error = NotFound(message="Cannot filter stages by given lead_1 {}".format(lead_1))
+                error = NotFound(
+                    message="Cannot filter stages by given lead_1 {}".format(lead_1)
+                )
                 return error.as_json(), error.http_code
         else:
             result, total = StageRepo.paginate()

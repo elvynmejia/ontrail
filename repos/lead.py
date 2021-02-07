@@ -1,6 +1,6 @@
 from .base import BaseRepo
-from models import Lead
-from entities import LeadEntity
+import models
+import entities
 
 
 class LeadRepo(BaseRepo):
@@ -8,8 +8,8 @@ class LeadRepo(BaseRepo):
 
     @classmethod
     def model(cls):
-        return Lead
+        return models.Lead
 
     @classmethod
     def entity(cls):
-        raise LeadEntity
+        return entities.LeadEntity

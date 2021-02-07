@@ -3,6 +3,7 @@ from .base import BaseEntity
 from constants import STATES
 from constants import DATETIME_FORMAT
 
+
 class StageEntity(BaseEntity):
     __envelope__ = {
         "single": "stage",

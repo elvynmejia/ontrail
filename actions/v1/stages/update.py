@@ -31,7 +31,9 @@ class Update(MethodView):
             lead_id = json_data.get("lead_id")
             lead = LeadRepo.find(public_id=lead_id)
         except RecordNotFound:
-            error = NotFound(message="Cannot find lead by given lead_id".format(lead_id))
+            error = NotFound(
+                message="Cannot find lead by given lead_id".format(lead_id)
+            )
             return error.as_json(), error.http_code
 
         try:

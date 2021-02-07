@@ -17,6 +17,7 @@ class Create(MethodView):
                 "contacts": json_data.get("contacts"),
                 "description": json_data.get("description"),
                 "status": json_data.get("status"),
+                "reference": json_data.get("reference"),
             }
 
             data = LeadEntity().load(params)

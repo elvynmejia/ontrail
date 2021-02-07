@@ -13,10 +13,9 @@ def create():
         contacts="Elvyn M",
         description="Not gonna make it startup",
         role="Sr Backend Engineer",
-        current_stage_id=101,
     )
 
-    StageRepo.create(
+    stage = StageRepo.create(
         title="Gloria <> Elvyn | Technical",
         links="",
         description="See how you go about solving a technical problem",
@@ -27,11 +26,14 @@ def create():
         end_at=datetime.utcnow().isoformat(),
     )
 
+    # assign a current stage
+    LeadRepo.update(id=lead.id, current_stage_id=stage.id)
+
     lead_1 = LeadRepo.create(
         company_name="Gem",
         contacts="Elvyn M",
         description="Not gonna make it startup",
-        role="Software Engineer"
+        role="Software Engineer",
     )
 
     for x in range(5):

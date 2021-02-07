@@ -2,6 +2,7 @@ from marshmallow import Schema, fields, validate, post_dump
 from .base import BaseEntity
 from constants import STATES
 from constants import DATETIME_FORMAT
+from repos.error import RecordNotFound
 
 
 class LeadEntity(BaseEntity):
@@ -22,8 +23,8 @@ class LeadEntity(BaseEntity):
         required=False, validate=validate.OneOf(STATES.values()), allow_none=True
     )
 
-    reference = fields.Str(required=False)
-    current_stage_id = fields.Int(required=False)
+    reference = fields.Str(required=False, allow_none=True)
+    current_stage_id = fields.Int(required=False, allow_none=True)
 
     leads = fields.List(fields.Nested(lambda: "StageEntity"), dump_only=True)
 
@@ -53,9 +54,16 @@ class LeadEntity(BaseEntity):
                     StageRepo,
                 )  # to avoid circular deps error for now
 
-                current_stage_id_to_public_id = StageRepo.find(
-                    id=data["current_stage_id"]
-                )
+                try:
+                    current_stage_id_to_public_id = StageRepo.find(
+                        id=data["current_stage_id"]
+                    )
+                except RecordNotFound:
+                    return {
+                        **default_data,
+                        "id": data["public_id"],
+                        "current_stage_id": None,
+                    }
 
                 return {
                     **default_data,

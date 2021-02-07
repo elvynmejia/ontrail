@@ -49,7 +49,6 @@ class TestUpdate(TestBase):
 
         assert response.status_code == 200
 
-
     def test_not_found(self):
         lead = LeadRepo.create(
             company_name="Test",
@@ -68,7 +67,7 @@ class TestUpdate(TestBase):
                     "start_at": start_at,
                     "end_at": end_at,
                     "state": "onsite",
-                    "lead_id": lead.public_id
+                    "lead_id": lead.public_id,
                 },
             },
         )
@@ -108,11 +107,7 @@ class TestUpdate(TestBase):
         response = self.client.patch(
             "v1/stages/{}".format(stage.public_id),
             json={
-                **{
-                    **params,
-                    "state": "offer",
-                    "lead_id": lead.public_id
-                },
+                **{**params, "state": "offer", "lead_id": lead.public_id},
             },
         )
         assert response.status_code == 200

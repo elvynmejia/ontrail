@@ -1,4 +1,6 @@
 from marshmallow import Schema, post_dump
+
+
 class BaseEntity(Schema):
     @classmethod
     def as_json(self, data, internal=False):

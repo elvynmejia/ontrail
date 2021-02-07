@@ -1,6 +1,6 @@
 from .base import BaseRepo
-from models import Stage
-from entities import StageEntity
+import models
+import entities
 
 
 class StageRepo(BaseRepo):
@@ -8,8 +8,8 @@ class StageRepo(BaseRepo):
 
     @classmethod
     def model(cls):
-        return Stage
+        return models.Stage
 
     @classmethod
     def entity(cls):
-        raise StageEntity
+        return entities.StageEntity
