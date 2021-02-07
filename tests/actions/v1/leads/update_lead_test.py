@@ -92,6 +92,7 @@ class TestUpdate(TestBase):
         )
 
         assert response.status_code == 200
+        assert response.get_json()["lead"]["current_stage_id"] == stage.public_id
 
     def test_current_stage_failure(self):
         lead = LeadRepo.create(

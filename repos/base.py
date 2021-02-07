@@ -20,6 +20,8 @@ class BaseRepo:
 
         if record:
             return record
+        else:
+            raise Exception
 
     @classmethod
     def find(cls, **kwargs):
