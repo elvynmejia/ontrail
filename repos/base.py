@@ -39,12 +39,17 @@ class BaseRepo:
 
     @classmethod
     def update(cls, id, **kwargs):
-        # update returns 1 or 0
-        record = cls.model().query.filter_by(id=id).update(kwargs)
+        result = (
+            db.session.query(cls.model())
+            .filter_by(id=id)
+            .update(
+                kwargs,
+            )
+        )
 
-        # should raise an error if no record
-        if record:
-            return cls.find(id=id)
+        # rescue exception here
+        db.session.commit()
+        return cls.find(id=id)
 
     @classmethod
     def paginate(cls, page=1, per_page=20, **kwargs):
