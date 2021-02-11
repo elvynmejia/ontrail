@@ -41,3 +41,4 @@ class TestLeadRepo(TestBase):
         )
         updated_lead = LeadRepo.update(id=lead.id, company_name="changed")
         assert updated_lead.company_name == "changed"
+        assert LeadRepo.find(id=lead.id).company_name == "changed"
