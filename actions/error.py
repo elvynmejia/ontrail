@@ -4,6 +4,17 @@ class ActionErrorBase(BaseException):
         self.code = code
         self.message = message
         self.errors = errors
+
+        mapped_errors = []
+
+        if isinstance(errors, list) and len(errors):
+            for error in errors:
+                if isinstance(error, dict):
+                    for key, value in error.items():
+                        mapped_errors.append({key: value})
+
+        self.errors = mapped_errors
+
         super().__init__(self.message)
 
     def __str__(self):
