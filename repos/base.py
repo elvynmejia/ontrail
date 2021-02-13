@@ -1,6 +1,7 @@
 from sqlalchemy import desc
 from db_config import db
 from .error import RecordNotFound
+from datetime import datetime
 
 
 class BaseRepo:
@@ -44,6 +45,20 @@ class BaseRepo:
             .filter_by(id=id)
             .update(
                 kwargs,
+            )
+        )
+
+        # rescue exception here
+        db.session.commit()
+        return cls.find(id=id)
+
+    @classmethod
+    def delete(cls, id):
+        result = (
+            db.session.query(cls.model())
+            .filter_by(id=id)
+            .update(
+                {"disabled_at": datetime.now()},
             )
         )
 

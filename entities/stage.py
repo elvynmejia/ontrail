@@ -26,6 +26,7 @@ class StageEntity(BaseEntity):
     end_at = fields.DateTime(required=False, allow_none=True, format=DATETIME_FORMAT)
     created_at = fields.DateTime(dump_only=True, format=DATETIME_FORMAT)
     updated_at = fields.DateTime(dump_only=True, format=DATETIME_FORMAT)
+    disabled_at = fields.DateTime(dump_only=True, format=DATETIME_FORMAT)
 
     @post_dump
     def post_dump_rocess(self, data, many, **kwargs):
@@ -42,6 +43,7 @@ class StageEntity(BaseEntity):
             "end_at": data["end_at"],
             "created_at": data["created_at"],
             "updated_at": data["updated_at"],
+            "disabled_at": data["disabled_at"],
         }
 
         if self.__internal__:

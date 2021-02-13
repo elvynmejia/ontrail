@@ -51,13 +51,16 @@ class Lead(db.Model):
         onupdate=datetime.utcnow(),
     )
 
+    disabled_at = db.Column(db.DateTime, nullable=True)
+
     def as_json(self):
         return LeadEntity().dump(self)
 
     def __repr__(self):
         return (
             "Lead(id = {}, public_id = {}, company_name = {}, role = {} contacts = {}, description = {} "
-            "status = {}, reference = {}, current_stage_id = {}, created_at = {}, updated_at = {})"
+            "status = {}, reference = {}, current_stage_id = {}, created_at = {}, updated_at = {} "
+            "disabled_at = {})"
             "".format(
                 repr(self.id),
                 repr(self.public_id),
@@ -70,5 +73,6 @@ class Lead(db.Model):
                 repr(self.current_stage_id),
                 repr(self.created_at),
                 repr(self.updated_at),
+                repr(self.disabled_at)
             )
         )

@@ -57,6 +57,7 @@ class Stage(db.Model):
     start_at = db.Column(db.DateTime, nullable=True)
 
     end_at = db.Column(db.DateTime, nullable=True)
+    disabled_at = db.Column(db.DateTime, nullable=True)
 
     def as_json(self):
         return StageEntity().dump(self)
@@ -65,7 +66,7 @@ class Stage(db.Model):
         return (
             "Stage(id = {}, public_id = {} title = {}, links = {} "
             "description = {}, notes = {}, lead_id = {} "
-            "state = {}, reference = {}, created_at = {}, updated_at = {})"
+            "state = {}, reference = {}, created_at = {}, updated_at = {}, disabled_at = {})"
             "".format(
                 repr(self.id),
                 repr(self.public_id),
@@ -80,5 +81,6 @@ class Stage(db.Model):
                 repr(self.end_at),
                 repr(self.created_at),
                 repr(self.updated_at),
+                repr(self.disabled_at),
             )
         )
