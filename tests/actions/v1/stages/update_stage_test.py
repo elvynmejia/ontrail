@@ -15,7 +15,7 @@ def get_params(lead_id=None):
         "description": "See how you go about solving a technical problem",
         "notes": "",
         "lead_id": lead_id,
-        "state": "phone_screen",
+        "state": "scheduled",
         "start_at": start_at,
         "end_at": end_at,
     }
@@ -41,7 +41,7 @@ class TestUpdate(TestBase):
                     **params,
                     "start_at": start_at,
                     "end_at": end_at,
-                    "state": "onsite",
+                    "state": "completed",
                     "lead_id": lead.public_id,
                 },
             },
@@ -107,7 +107,7 @@ class TestUpdate(TestBase):
         response = self.client.patch(
             "v1/stages/{}".format(stage.public_id),
             json={
-                **{**params, "state": "offer", "lead_id": lead.public_id},
+                **{**params, "state": "in_progress", "lead_id": lead.public_id},
             },
         )
         assert response.status_code == 200
@@ -128,7 +128,7 @@ class TestUpdate(TestBase):
             json={
                 **{
                     **params,
-                    "state": "offer",
+                    "state": "in_progress",
                     "end_at": datetime.utcnow().isoformat(),
                     "lead_id": lead.public_id,
                 },

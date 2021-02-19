@@ -21,7 +21,18 @@ def create():
         description="See how you go about solving a technical problem",
         notes="",
         lead_id=lead.id,
-        state="phone_screen",
+        state="unscheduled",
+        start_at=datetime.utcnow().isoformat(),
+        end_at=datetime.utcnow().isoformat(),
+    )
+
+    StageRepo.create(
+        title="Gloria <> Elvyn | Technical",
+        links="",
+        description="See how you go about solving a technical problem",
+        notes="",
+        lead_id=lead.id,
+        state="completed",
         start_at=datetime.utcnow().isoformat(),
         end_at=datetime.utcnow().isoformat(),
     )
@@ -43,7 +54,7 @@ def create():
             description="See how you go about solving a technical problem {}".format(x),
             notes="",
             lead_id=lead_1.id,
-            state="phone_screen",
+            state="scheduled",
             start_at=datetime.utcnow().isoformat(),
             end_at=datetime.utcnow().isoformat(),
         )

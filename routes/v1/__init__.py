@@ -5,7 +5,7 @@ from actions.v1.leads import (
     List as ListLeads,
     Show as ShowLead,
     Update as UpdateLead,
-    Delete as DeleteLead
+    Delete as DeleteLead,
 )
 
 from actions.v1.stages import (
@@ -30,12 +30,10 @@ routes_bp.add_url_rule(
     "/v1/leads/<id>", view_func=UpdateLead.as_view("v1_leads_update"), methods=["PATCH"]
 )
 
-# routes_bp.add_url_rule(
-#     "/v1/leads/<id>", view_func=ShowLead.as_view("v1_leads_show"), methods=["GET"]
-# )
-
 routes_bp.add_url_rule(
-    "/v1/leads/<id>", view_func=DeleteLead.as_view("v1_leads_delete"), methods=["DELETE"]
+    "/v1/leads/<id>",
+    view_func=DeleteLead.as_view("v1_leads_delete"),
+    methods=["DELETE"],
 )
 
 routes_bp.add_url_rule(

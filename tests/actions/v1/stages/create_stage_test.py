@@ -21,12 +21,11 @@ class TestCreate(TestBase):
                 "description": "See how you go about solving a technical problem",
                 "notes": "",
                 "lead_id": lead.public_id,
-                "state": "phone_screen",
+                "state": "unscheduled",
                 "start_at": datetime.utcnow().strftime(DATETIME_FORMAT),
                 "end_at": datetime.utcnow().strftime(DATETIME_FORMAT),
             },
         )
-
         assert response.status_code == 201
         assert response.get_json()["stage"]["lead_id"] == lead.public_id
 
@@ -46,10 +45,9 @@ class TestCreate(TestBase):
                 "description": "See how you go about solving a technical problem",
                 "notes": "",
                 "lead_id": lead.public_id,
-                "state": "phone_screen",
+                "state": "unscheduled",
             },
         )
-
         assert response.status_code == 201
         assert response.get_json()["stage"]["lead_id"] == lead.public_id
 
@@ -61,7 +59,7 @@ class TestCreate(TestBase):
                 "links": "",
                 "description": "See how you go about solving a technical problem",
                 "notes": "",
-                "state": "phone_screen",
+                "state": "unscheduled",
                 "start_at": datetime.utcnow().strftime(DATETIME_FORMAT),
                 "end_at": datetime.utcnow().strftime(DATETIME_FORMAT),
             },
@@ -81,7 +79,7 @@ class TestCreate(TestBase):
                 "links": "",
                 "description": "See how you go about solving a technical problem",
                 "notes": "",
-                "state": "phone_screen",
+                "state": "unscheduled",
                 "start_at": datetime.utcnow().strftime(DATETIME_FORMAT),
                 "end_at": datetime.utcnow().strftime(DATETIME_FORMAT),
                 "lead_id": lead_id__does_not_exist,
@@ -108,7 +106,7 @@ class TestCreate(TestBase):
                 "links": "",
                 "description": "See how you go about solving a technical problem",
                 "notes": "",
-                "state": "phone_screen",
+                "state": "unscheduled",
                 "start_at": datetime.utcnow().strftime(DATETIME_FORMAT),
                 "end_at": datetime.utcnow().isoformat(),
                 "lead_id": lead.public_id,

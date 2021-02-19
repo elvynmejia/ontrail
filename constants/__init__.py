@@ -1,13 +1,18 @@
-STATES = {
-    "unscheduled": "unscheduled",  # kind of doesn't make sense
+LEAD_STATUSES = {
+    "unscheduled": "unscheduled",
     "phone_screen": "phone_screen",
-    "take_home_or_technical": "take_home_or_technical",
+    "project": "project",
     "onsite": "onsite",
     "offer": "offer",
     "hired": "hired",
-    "not_a_good_fit": "not_a_good_fit",  # for me or for them
 }
 
+STAGE_STATUSES = {
+    "unscheduled": "unscheduled",
+    "scheduled": "scheduled",
+    "in_progress": "in_progress",
+    "completed": "completed",
+}
 
 DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
 DATETIME_FORMAT_HUMAN_READABLE = "YYYY-MM-DDTHH:MM:SS.mmmmmm"

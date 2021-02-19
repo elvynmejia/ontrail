@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from db_config import db
-from constants import STATES
+from constants import STAGE_STATUSES
 from entities import StageEntity
 from models.lead import Lead
 from .util import generate_public_id
@@ -35,7 +35,9 @@ class Stage(db.Model):
 
     lead_id = db.Column(db.Integer, db.ForeignKey(Lead.id), nullable=False)
 
-    state = db.Column(db.String(100), nullable=False, default=STATES["phone_screen"])
+    state = db.Column(
+        db.String(100), nullable=False, default=STAGE_STATUSES["unscheduled"]
+    )
     # relationships
     # this is problematic right now
     # lead = db.relationship(

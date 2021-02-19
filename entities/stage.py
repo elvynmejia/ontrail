@@ -1,6 +1,6 @@
 from marshmallow import fields, validate, post_dump
 from .base import BaseEntity
-from constants import STATES
+from constants import STAGE_STATUSES
 from constants import DATETIME_FORMAT
 
 
@@ -19,7 +19,7 @@ class StageEntity(BaseEntity):
     description = fields.Str()
     notes = fields.Str()
     lead_id = fields.Int(required=True)
-    state = fields.Str(required=False, validate=validate.OneOf(STATES.values()))
+    state = fields.Str(required=False, validate=validate.OneOf(STAGE_STATUSES.values()))
     reference = fields.Str(required=False)
 
     start_at = fields.DateTime(required=False, allow_none=True, format=DATETIME_FORMAT)

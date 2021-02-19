@@ -1,7 +1,7 @@
 from datetime import datetime
 from entities.lead import LeadEntity
 from db_config import db
-from constants import STATES
+from constants import LEAD_STATUSES
 from .util import generate_public_id
 
 
@@ -29,7 +29,7 @@ class Lead(db.Model):
     description = db.Column(db.Text(400), nullable=True)
 
     status = db.Column(
-        db.String(100), nullable=False, default=STATES.get("unscheduled")
+        db.String(100), nullable=False, default=LEAD_STATUSES.get("unscheduled")
     )
 
     reference = db.Column(db.String(100), nullable=True)
@@ -73,6 +73,6 @@ class Lead(db.Model):
                 repr(self.current_stage_id),
                 repr(self.created_at),
                 repr(self.updated_at),
-                repr(self.disabled_at)
+                repr(self.disabled_at),
             )
         )

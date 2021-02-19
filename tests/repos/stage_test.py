@@ -1,6 +1,6 @@
 from datetime import datetime
 from tests.test_base import TestBase
-from models.stage import STATES
+from models.stage import STAGE_STATUSES
 from repos import StageRepo, LeadRepo
 
 
@@ -24,9 +24,9 @@ class TestStageRepo(TestBase):
         assert stage.title == "phone screen with Gloria"
         assert stage.description == "See if there's match"
         assert stage.lead_id == lead.id
-        assert stage.state == "phone_screen"
+        assert stage.state == "unscheduled"
 
-    def test_create_with_phone_screen_status(self):
+    def test_create_with_unscheduled_status(self):
         lead = LeadRepo.create(
             company_name="Test",
             contacts="Elvyn M",
@@ -38,7 +38,7 @@ class TestStageRepo(TestBase):
             title="phone screen with Gloria",
             description="See if there's match",
             lead_id=lead.id,
-            state=STATES["phone_screen"],
+            state=STAGE_STATUSES["unscheduled"],
             start_at=datetime.utcnow(),
             end_at=datetime.utcnow(),
         )
@@ -46,7 +46,7 @@ class TestStageRepo(TestBase):
         assert stage.title == "phone screen with Gloria"
         assert stage.description == "See if there's match"
         assert stage.lead_id == lead.id
-        assert stage.state == STATES["phone_screen"]
+        assert stage.state == STAGE_STATUSES["unscheduled"]
 
     def test_find(self):
         lead = LeadRepo.create(

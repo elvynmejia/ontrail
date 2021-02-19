@@ -18,7 +18,7 @@ class Delete(MethodView):
             lead = LeadRepo.find(public_id=id)
             LeadRepo.delete(id=lead.id)
 
-            return ('', 204) # return empty body
+            return ("", 204)  # return empty body
         except RecordNotFound as err:
             error = NotFound(message="Lead with id {} not found".format(id))
             return (error.as_json(), error.http_code)
