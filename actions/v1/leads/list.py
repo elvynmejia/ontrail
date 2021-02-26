@@ -31,6 +31,7 @@ class List(MethodView):
             return error.as_json(), error.http_code
 
 
+        # NOTE: this will be an unauthenticated/unauthorized call
         try:
             if request.args.get("url"):
                 lead = LeadRepo.find(url=request.args.get("url"))

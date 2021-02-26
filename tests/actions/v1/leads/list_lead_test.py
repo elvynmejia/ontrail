@@ -80,7 +80,7 @@ class TestList(TestBase):
         response = self.client.get("/v1/leads", query_string={"status": "invalid"})
         assert response.status_code == 422
 
-    def test_list_filter_by_status_url(self):
+    def test_list_filter_by_url(self):
         lead = LeadRepo.create(
             company_name="Test Company",
             contacts="Elvyn M",

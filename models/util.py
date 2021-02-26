@@ -16,7 +16,7 @@ def generate_public_id(context, cls, prefix):
 
 def generate_url():
     url = environ["TRACKIT_URL"] + "/leads?url={}".format(uuid4().hex)
-    # keep generating a public_id until we find a unique value
+    # keep generating a url until we find a unique value
     while len(models.Lead.query.filter_by(url=url).all()) > 0:
         url = environ["TRACKIT_URL"] + "/leads?url={}".format(uuid4().hex)
 
