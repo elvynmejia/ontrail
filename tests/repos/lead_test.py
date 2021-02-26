@@ -14,6 +14,7 @@ class TestLeadRepo(TestBase):
         assert lead.company_name == "Test"
         assert lead.contacts == "Elvyn M"
         assert lead.description == "Not gonna make it startup"
+        assert lead.url is not None
 
     def test_find(self):
         lead_1 = LeadRepo.create(

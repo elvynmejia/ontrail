@@ -16,6 +16,7 @@ class LeadEntity(BaseEntity):
     id = fields.Int(dump_only=True)
     public_id = fields.Str(dump_only=True)
     company_name = fields.Str(required=True)
+    url = fields.Str(required=False)
     role = fields.Str(required=True)
     contacts = fields.Str(required=True)
     description = fields.Str(allow_none=True)
@@ -37,6 +38,7 @@ class LeadEntity(BaseEntity):
         default_data = {
             "id": data["id"],
             "company_name": data["company_name"],
+            "url": data["url"],
             "role": data["role"],
             "contacts": data["description"],
             "description": data["description"],

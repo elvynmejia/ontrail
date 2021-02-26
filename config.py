@@ -3,8 +3,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-basedir = path.abspath(path.dirname(__file__))
-
 
 class BaseConfig:
     """Base config."""

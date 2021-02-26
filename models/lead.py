@@ -2,7 +2,7 @@ from datetime import datetime
 from entities.lead import LeadEntity
 from db_config import db
 from constants import LEAD_STATUSES
-from .util import generate_public_id
+from .util import generate_public_id, generate_url
 
 
 class Lead(db.Model):
@@ -21,6 +21,8 @@ class Lead(db.Model):
     )
 
     company_name = db.Column(db.String(100), nullable=False)
+
+    url = db.Column(db.String(100), nullable=False, default=generate_url)
 
     role = db.Column(db.String(100), nullable=False)
 
@@ -58,13 +60,14 @@ class Lead(db.Model):
 
     def __repr__(self):
         return (
-            "Lead(id = {}, public_id = {}, company_name = {}, role = {} contacts = {}, description = {} "
+            "Lead(id = {}, public_id = {}, company_name = {}, url = {}, role = {} contacts = {}, description = {} "
             "status = {}, reference = {}, current_stage_id = {}, created_at = {}, updated_at = {} "
             "disabled_at = {})"
             "".format(
                 repr(self.id),
                 repr(self.public_id),
                 repr(self.company_name),
+                repr(self.url),
                 repr(self.role),
                 repr(self.contacts),
                 repr(self.description),
