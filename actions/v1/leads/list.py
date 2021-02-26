@@ -4,7 +4,9 @@ from marshmallow import ValidationError
 from repos import LeadRepo
 from entities import LeadEntity
 from constants import LEAD_STATUSES
-from actions.error import UnprocessableEntity
+from actions.error import UnprocessableEntity, NotFound
+from repos.error import RecordNotFound
+
 
 
 class List(MethodView):
@@ -27,6 +29,15 @@ class List(MethodView):
                 return (LeadEntity.as_json(result), 200)
         except UnprocessableEntity as error:
             return error.as_json(), error.http_code
+
+
+        try:
+            if request.args.get("url"):
+                lead = LeadRepo.find(url=request.args.get("url"))
+                return (LeadEntity.as_json([lead]), 200)
+        except RecordNotFound as err:
+            error = NotFound()
+            return (error.as_json(), error.http_code)
 
         result, total = LeadRepo.paginate()
 
